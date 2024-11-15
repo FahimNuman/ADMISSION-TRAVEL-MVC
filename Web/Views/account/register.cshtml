@@ -1,0 +1,158 @@
+﻿@using Services.Domain
+@model UserOperationModel
+@{
+    ViewBag.Title = "login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-container col1-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-xs-12">
+                <article class="col-main">
+                    <div class="account-login">
+                        <div class="page-title">
+                            <h2>Create an Account</h2>
+                        </div>
+                        <fieldset class="col2-set">
+                            <div class="col-12 new-users">
+                                <div class="content">
+                                    <p>By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-7 ml-auto registered-users">
+                                <div class="content">
+                                    @using (Html.BeginForm("ProcessNewUser", "account", FormMethod.Post, new { @class = "form-horizontal", @id = "registration", role = "form", autocomplete = "off" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <ul class="form-list">
+                                            <li>
+                                                <label>First Name<span class="required">*</span></label>
+                                                @Html.TextBoxFor(m => m.User.FirstName, new
+                                           {
+                                               @class = "input-text required-entry",
+                                               title = "First Name",
+                                               @error_msg = "First name is required"
+
+                                           })
+                                            </li>
+                                            <li>
+                                                <label>Last Name<span class="required">*</span></label>
+                                                @Html.TextBoxFor(m => m.User.LastName, new
+                                           {
+                                               @class = "input-text required-entry",
+                                               title = "Last Name",
+                                               @error_msg = "Last name is required"
+                                           })
+                                                <span class="validation-message" id="lastNameMessage"></span>
+                                            </li>
+                                            <li>
+                                                <label>Email<span class="required">*</span></label>
+                                                @Html.TextBoxFor(m => m.User.EmailAddress, new { @class = "input-text required-entry", @type = "email", title = "Email", @value = "",
+                                               @data_validation = "email",
+                                               @error_msg = "Email name is required",
+                                               @expression_msg = "Email must be this form test@gmail.com"
+                                           })
+                                                <span class="validation-message" id="emailExistMessage"></span>
+                                            </li>
+                                            <li>
+                                                <label>Country<span class="required">*</span></label>
+                                                @Html.DropDownListFor(m => m.User.Country, ViewBag.CountryList as SelectList, new { @class = "input-text required-entry",
+                                               @required = "required",
+                                               @error_msg = "Country name is required"
+                                           })
+                                            </li>
+                                            <li>
+                                                <label>Phone<span class="required">*</span></label>
+                                                @Html.TextBoxFor(m => m.User.PhoneNumber, new { @class = "input-text required-entry", title = "Phone", @value = "",
+                                               @data_validation = "phone",
+                                               @error_msg = "Phone number is required"
+                                           })
+                                            </li>
+                                            <li>
+                                                <label>Password<span class="required">*</span></label>
+                                                @Html.TextBoxFor(m => m.User.Password, new
+                                           {
+                                               @class = "input-text required-entry",
+                                               @type = "password",
+                                               title = "Password",
+                                               @value = "",
+                                               @data_validation = "password",
+                                               @error_msg = "Enter your password"
+                                           })
+                                            </li>
+                                            <li>
+                                                <label>Confirm Password<span class="required">*</span></label>
+                                                @Html.TextBoxFor(m => m.User.ConfirmPassword, new { @class = "input-text required-entry", @type = "password", title = "Confirm Password", @value = "",
+                                               @data_validation = "confirmation",
+                                               @error_msg = "Enter confirm password",
+                                               @expression_msg = "Your confirm password doesn't match",
+                                               @confirmation_id= "User_Password"
+                                           })
+                                            </li>
+                                        </ul>
+                                        <p class="required">* Required Fields</p>
+                                        <div class="buttons-set">
+                                            <button type="button" class="button login" onclick="return DoRegistretionValidation();"><span>Register</span></button>
+                                            <button id="submit" name="send" type="submit" style="display: none;"></button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </article>
+                <!--	///*///======    End article  ========= //*/// -->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var isEmailValid = true;
+    $(document).ready(function () {
+        $("#User_EmailAddress").keyup(function () {
+            isEmailValid = CheckEmailAddressExist();
+        });
+    });
+
+
+    function CheckEmailAddressExist() {
+        $(".validation-message").remove();
+        var email = $.trim($("#User_EmailAddress").val());
+        $.get("/account/CheckUserEmailIsExist/", { email: email }, function (data) {
+            if (data) {
+                $("#User_EmailAddress").after("<span class='validation-message error-msg'>Email already exists in current system</span>");
+            }
+        });
+
+    }
+
+
+    function DoRegistretionValidation() {
+        var email = $.trim($("#User_EmailAddress").val());
+
+        if (email != "") {
+            $.get("/account/CheckUserEmailIsExist/", { email: email }, function (data) {
+                if (data) {
+                    $(".required-entry").MyFormValidation();
+                    $("#User_EmailAddress").after("<span class='validation-message error-msg'>Email already exists in current system</span>");
+                } else {
+                    var isFormValid = $(".required-entry").MyFormValidation();
+                    if (isFormValid) {
+                        $("#submit").click();
+                    }
+                }
+            });
+        } else {
+            var isFormValid = $(".required-entry").MyFormValidation();
+            if (isFormValid) {
+                $("#submit").click();
+            }
+        }
+        
+    }
+
+</script>

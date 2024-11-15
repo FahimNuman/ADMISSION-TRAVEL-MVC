@@ -1,0 +1,195 @@
+﻿.no-border {
+    border: none !important;
+}
+
+.btn-outline-primary {
+    border-radius: 1px !important;
+    font-weight: bold;
+    color: #007bff !important;
+    cursor: pointer;
+}
+
+.align-right {
+    float: right;
+}
+
+.btn-outline-primary:hover {
+    color: #fff !important;
+}
+
+a.action-btn.edit {
+    background: #007bff;
+}
+
+a.action-btn.delete {
+    background: red;
+}
+
+a.action-btn {
+    padding: 5px 10px;
+    display: block;
+    float: left;
+    margin-right: 5px;
+    color: #fff !important;
+    font-size: 15px;
+    text-decoration: none !important;
+}
+
+
+.true-icon {
+    color: forestgreen;
+}
+
+.false-icon {
+    color: red;
+}
+
+span.validation-message.error-msg {
+    border: none !important;
+    display: block;
+    text-align: center;
+    padding: 1px !important;
+    background: none;
+    margin-bottom: 5px;
+    font-weight: normal;
+    color: #df280a !important;
+}
+
+.image-preview, #divDefaultUploadedUserImg {
+    max-height: 120px;
+    max-width: 120px;
+    padding: 5px;
+    border-radius: 5px;
+    border-color: #ccc;
+}
+
+.nav-tabs > li {
+    float: left;
+    margin-bottom: -1px;
+}
+
+.nav > li {
+    position: relative;
+    display: block;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+
+.nav-tabs > li > a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+    text-decoration: none !important;
+}
+
+.nav > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+
+img.product-image {
+    max-width: 60px;
+}
+
+img.gallery-image {
+    height: 120px;
+    padding: 5px;
+    border: 2px solid #ccc;
+    border-radius: 1px;
+    margin: 5px;
+    width: auto;
+}
+
+div#galleryImages .gallery-single-image {
+    float: left;
+    display: block;
+    overflow: hidden;
+}
+
+span.gl-close {
+    position: relative;
+    left: 22px;
+    top: -44px;
+    background: rgba(255,255,255,.5);
+    cursor: pointer;
+}
+
+span.customer-name, span.customer-email {
+    display: block;
+}
+
+.top-brand-link img {
+    max-height: 45px;
+}
+
+.top-brand-link {
+    padding: 3px !important;
+}
+
+
+.card .header .header-dropdown .btn-success i {
+    color: #fff !important;
+}
+
+.mt-5 {
+    margin-top: 5em !important;
+}
+
+.k-dropzone {
+    cursor: pointer;
+}
+
+.form-horizontal .form-group {
+    margin-bottom: 30px !important;
+}
+
+.no-padding {
+    padding: 0px !important;
+}
+
+.required {
+    color: red !important;
+}
+
+span.one-half {
+    display: inline-block;
+    width: 49%;
+}
+
+    span.one-half.first {
+        padding-right: 25px;
+    }
+
+
+.tab-pane {
+    display: none;
+}
+
+    .tab-pane.active {
+        display: block;
+    }
+
+.form-horizontal .form-group {
+    margin-bottom: 30px !important;
+    min-height: 90px;
+}
+
+
+.k-window-titlebar.k-header {
+    background: indigo !important;
+    color: #fff !important;
+}
+
+@media only screen and (max-width: 767px) {
+    section.content {
+        margin: -9px 15px 0 315px;
+    }
+}

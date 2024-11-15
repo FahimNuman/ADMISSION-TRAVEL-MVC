@@ -1,0 +1,76 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@{
+    ViewBag.Title = "Our News Portal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Main Container -->
+<div class="main-container col2-left-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-8 col-xs-12 col-sm-push-4 col-md-push-3">
+                <article class="col-main">
+                    <div class="page-title">
+                        <h2>Our News</h2>
+                    </div>
+                    @if (ViewBag.AllPostList != null && ViewBag.AllPostList.Count > 0)
+                    {
+                        <div class="pages">
+                            @Html.PagedListPager((IPagedList)ViewBag.AllPostList, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+                   { ContainerDivClasses = new[] { "pagination" } })
+                        </div>
+                    }
+                    
+                    <div class="blog-wrapper" id="main">
+                        <div class="site-content" id="primary">
+                            <div role="main" id="content">
+                                @for (var itemCount = 0; itemCount < ViewBag.AllPostList.Count; itemCount++)
+                                {
+                                    <article class="blog_entry clearfix">
+                                        <div class="entry-content">
+                                            <div class="featured-thumb listed-blog"><a href="~/blog/details/@ViewBag.AllPostList[itemCount].Id"><img alt="@ViewBag.AllPostList[itemCount].Title" src="@ViewBag.AllPostList[itemCount].FeaturedImagePath"></a></div>
+                                            <header class="blog_entry-header clearfix">
+                                                <div class="blog_entry-header-inner">
+                                                    <h2 class="blog_entry-title"> <a rel="bookmark" href="~/blog/details/@ViewBag.AllPostList[itemCount].Id">@ViewBag.AllPostList[itemCount].Title</a> </h2>
+                                                </div>
+                                                <!--blog_entry-header-inner-->
+                                            </header>
+                                            <div class="entry-content">
+                                                <ul class="post-meta">
+                                                    <li><i class="fa fa-user"></i>posted by @ViewBag.AllPostList[itemCount].AdminName</li>
+                                                    <li><i class="fa fa-comments"></i>@ViewBag.AllPostList[itemCount].TotalsComments comments</li>
+                                                    <li><i class="fa fa-clock-o"></i><span class="day">@ViewBag.AllPostList[itemCount].CreatedDate.ToString("dd")</span> <span class="month">@ViewBag.AllPostList[itemCount].CreatedDate.ToString("MMM")</span></li>
+                                                </ul>
+                                                <p>@ViewBag.AllPostList[itemCount].SortDetails</p>
+                                            </div>
+                                            <p> <a class="btn" href="~/blog/details/@ViewBag.AllPostList[itemCount].Id">Read More</a> </p>
+                                        </div>
+                                    </article>
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (ViewBag.AllPostList != null && ViewBag.AllPostList.Count > 0)
+                    {
+                        <div class="pages">
+                            @Html.PagedListPager((IPagedList)ViewBag.AllPostList, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+                       { ContainerDivClasses = new[] { "pagination" } })
+                        </div>
+                    }
+                </article>
+                <!--	///*///======    End article  ========= //*/// -->
+            </div>
+            <aside class="col-left sidebar col-md-3 col-sm-4 col-xs-12 col-sm-pull-8 col-md-pull-9">
+              
+                <div role="complementary" class="widget_wrapper13" id="secondary">
+
+                    @Html.Action("_LoadPopularPost", "blog")
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+<!-- Main Container End -->

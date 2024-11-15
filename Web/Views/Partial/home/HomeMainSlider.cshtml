@@ -1,0 +1,20 @@
+﻿@if (ViewBag.MainSlider != null && ViewBag.MainSlider.Count > 0)
+{
+
+
+    <div id="magik-slideshow" class="magik-slideshow slider-block">
+        <div id='rev_slider_4_wrapper' class='rev_slider_wrapper fullwidthbanner-container'>
+            <div id='rev_slider_4' class='rev_slider fullwidthabanner'>
+                <ul>
+                    @for (var itemCount = 0; itemCount < ViewBag.MainSlider.Count; itemCount++)
+                {
+                        <li data-transition='random' data-slotamount='7' data-masterspeed='1000' data-thumb='@Url.Content("~" + ViewBag.MainSlider[itemCount].ImagePath)'>
+                            <img src='@Url.Content("~" + ViewBag.MainSlider[itemCount].ImagePath)' alt="slide-img" data-bgposition='left top' data-bgfit='cover' data-bgrepeat='no-repeat' />
+
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,452 @@
+﻿@model Services.Domain.Admin.OrderOperationDataModel
+
+
+<style>
+    .panel.panel-default {
+        border-color: snow !important;
+        background: none !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    h4.panel-title input {
+        display: block !important;
+        float: left !important;
+        margin-right: 10px !important;
+    }
+
+    div.panel-group {
+        background: rgba(0, 0, 0, 0.1) !important;
+        padding: 15px !important;
+    }
+
+    .panel-default > .panel-heading {
+        background: none !important;
+        border: none !important;
+        padding: 5px 8px !important;
+    }
+</style>
+@if (ViewBag.MyCartList != null && ViewBag.MyCartList.Count > 0)
+{
+    using (Html.BeginForm("ProcessCustomerOrder", "shop", FormMethod.Post, new { @class = "form-horizontal", @id = "registration", role = "form", autocomplete = "off" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.OrderTable.TempCookie, new { @id = "Dummy_Browser_TempCookie" })
+        @Html.HiddenFor(m => m.OrderTable.PaymentMethod, new { @id = "Dummy_PaymentMethod", @Value = "Cash on delivery" })
+        @Html.HiddenFor(m => m.OrderTable.ProductPrice, new { @id = "dummy_hidden_Cart_totals" })
+        @Html.HiddenFor(m => m.OrderTable.ShippingCost, new { @id = "Dummy_hidden_ShippingCost", @Value = "50" })
+        @Html.HiddenFor(m => m.OrderTable.TotalAmount, new { @id = "Dummy_hidden_TotalAmount_ForCart" })
+        <div class="cart-collaterals row">
+            <div class="col-sm-4">
+                <div class="shipping">
+                    <h3>Estimate Shipping and Tax</h3>
+                    <div class="shipping-form">
+                        <p>Enter your destination to get a shipping estimate.</p>
+                        <ul class="form-list">
+                            <li>
+                                <label class="required" for="postcode">Name<em>*</em></label>
+                                <div class="input-box">
+                                    @Html.TextBoxFor(m => m.OrderTable.CustomerName, new
+                               {
+                                   @class = "input-text required-entry",
+                                   title = "Name",
+                                   @Value = ViewBag.UserName,
+                                   @error_msg = "Enter your name"
+
+                               })
+                                </div>
+                            </li>
+                            <li>
+                                <label class="required" for="postcode">Email<em>*</em></label>
+                                <div class="input-box">
+                                    @Html.TextBoxFor(m => m.OrderTable.CustomerEmail, new
+                               {
+                                   @class = "input-text required-entry",
+                                   title = "Email",
+                                   @data_validation = "email",
+                                   @Value = ViewBag.UserEmail,
+                                   @error_msg = "Enter your email",
+                                   @expression_msg = "Email must be this form test@gmail.com"
+                               })
+                                </div>
+                            </li>
+                            <li>
+                                <label class="required" for="postcode">Mobile<em>*</em></label>
+                                <div class="input-box">
+                                    @Html.TextBoxFor(m => m.OrderTable.CustomerMobile, new
+                               {
+                                   @class = "input-text required-entry",
+                                   title = "Mobile",
+                                   @error_msg = "Enter your mobile"
+
+                               })
+                                </div>
+                            </li>
+                            <li>
+                                <label class="required" for="country">Country<em>*</em></label>
+                                <div class="">
+                                    @(Html.Kendo().ComboBoxFor(m => m.OrderTable.Country)
+.DataTextField("Name")
+.DataValueField("Name")
+.HtmlAttributes(new
+{
+    @class = "required-entry",
+    style = "width: 95%;",
+    @data_validation = "combo",
+    id = "cmbCountryList",
+    @Value = "Bangladesh",
+    @error_msg = "Country name is required",
+    @expression_msg = "Country not exist in world"
+})
+.DataSource(source =>
+{
+    source.Read(read =>
+    {
+        read.Action("GetAllCountryList", "Common");
+    });
+}))
+
+                                </div>
+                            </li>
+                            <li>
+                                <label class="required" for="region_id">State/Province<em>*</em></label>
+                                <div class="input-box">
+                                    @Html.TextBoxFor(m => m.OrderTable.State, new
+                               {
+                                   @class = "input-text required-entry",
+                                   title = "State/Province",
+                                   @error_msg = "Enter state/province"
+
+                               })
+                                </div>
+                            </li>
+                            <li>
+                                <label class="required" for="postcode">Zip/Postal Code<em>*</em></label>
+                                <div class="input-box">
+                                    @Html.TextBoxFor(m => m.OrderTable.ZipCode, new
+                               {
+                                   @class = "input-text required-entry",
+                                   title = "Zip/Postal Code",
+                                   @error_msg = "Enter zip/postal Code"
+
+                               })
+                                </div>
+                            </li>
+                            <li>
+                                <label for="postcode">Address Details<em>*</em></label>
+                                <div class="input-box">
+                                    @Html.TextBoxFor(m => m.OrderTable.AddressDetails, new
+                               {
+                                   @class = "input-text required-entry",
+                                   title = "Address Details",
+                                   @error_msg = "Enter your destination to get a shipping estimate"
+
+                               })
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <h3>@Html.CheckBoxFor(m => m.OrderTable.ShipDifferentAddress, new { @id = "chkShipDifferentAddress" }) <label for="chkShipDifferentAddress">Ship Different Address</label></h3>
+                    <div class="shipping-form different_address_form" style="display: none;">
+                        <p>Enter your destination to get a shipping estimate.</p>
+                        <ul class="form-list">
+                            <li>
+                                <label class="required" for="postcode">Name<em>*</em></label>
+                                <div class="input-box">
+                                    @Html.TextBoxFor(m => m.OrderTable.ShipName, new
+                               {
+                                   @class = "input-text different_ship_field",
+                                   title = "Name",
+                                   @error_msg = "Enter your name"
+
+                               })
+                                </div>
+                            </li>
+                            <li>
+                                <label class="required" for="postcode">Email<em>*</em></label>
+                                <div class="input-box">
+                                    @Html.TextBoxFor(m => m.OrderTable.ShipEmail, new
+                               {
+                                   @class = "input-text different_ship_field",
+                                   title = "Email",
+                                   @data_validation = "email",
+                                   @error_msg = "Enter your email",
+                                   @expression_msg = "Email must be this form test@gmail.com"
+                               })
+                                </div>
+                            </li>
+                            <li>
+                                <label class="required" for="postcode">Mobile<em>*</em></label>
+                                <div class="input-box">
+                                    @Html.TextBoxFor(m => m.OrderTable.ShipPhone, new
+                               {
+                                   @class = "input-text different_ship_field",
+                                   title = "Mobile",
+                                   @error_msg = "Enter your mobile"
+
+                               })
+                                </div>
+                            </li>
+                            <li>
+                                <label class="required" for="country">Country<em>*</em></label>
+                                <div class="">
+                                    @(Html.Kendo().ComboBoxFor(m => m.OrderTable.ShipCountry)
+.DataTextField("Name")
+.DataValueField("Name")
+.HtmlAttributes(new
+{
+    @class = "different_ship_field",
+    style = "width: 95%;",
+    @data_validation = "combo",
+    id = "cmbCountryListShipCountry",
+    @Value = "Bangladesh",
+    @error_msg = "Country name is required",
+    @expression_msg = "Country not exist in world"
+})
+.DataSource(source =>
+{
+    source.Read(read =>
+    {
+        read.Action("GetAllCountryList", "Common");
+    });
+}))
+
+                                </div>
+                            </li>
+                            <li>
+                                <label class="required" for="region_id">State/Province<em>*</em></label>
+                                <div class="input-box">
+                                    @Html.TextBoxFor(m => m.OrderTable.ShipCity, new
+                               {
+                                   @class = "input-text different_ship_field",
+                                   title = "State/Province",
+                                   @error_msg = "Enter state/province"
+
+                               })
+                                </div>
+                            </li>
+                            <li>
+                                <label class="required" for="postcode">Zip/Postal Code<em>*</em></label>
+                                <div class="input-box">
+                                    @Html.TextBoxFor(m => m.OrderTable.ShipPostCode, new
+                               {
+                                   @class = "input-text different_ship_field",
+                                   title = "Zip/Postal Code",
+                                   @error_msg = "Enter zip/postal Code"
+
+                               })
+                                </div>
+                            </li>
+                            <li>
+                                <label for="postcode">Address Details<em>*</em></label>
+                                <div class="input-box">
+                                    @Html.TextBoxFor(m => m.OrderTable.ShipAddressDetails, new
+                               {
+                                   @class = "input-text different_ship_field",
+                                   title = "Address Details",
+                                   @error_msg = "Enter your destination to get a shipping estimate"
+
+                               })
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="discount">
+                    <h3>Discount Codes</h3>
+                    <form method="post" action="#couponPost/" id="discount-coupon-form">
+                        <label for="coupon_code">Enter your coupon code if you have one.</label>
+                        <input type="hidden" value="0" id="remove-coupone" name="remove">
+                        <input type="text" value="" name="coupon_code" id="coupon_code" class="input-text fullwidth">
+                        <button value="Apply Coupon" onclick="discountForm.submit(false)" class="button coupon " title="Apply Coupon" type="button"><span>Apply Coupon</span></button>
+                    </form>
+                </div>
+                <br /><br />
+                <h3>Payment Method</h3>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingCashOnDelivery">
+                            <h4 class="panel-title">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Cash on delivery" checked>
+                                <label for="inlineRadio1">Cash on delivery</label>
+                            </h4>
+                        </div>
+                        <div id="collapseCashOnDelivery" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCashOnDelivery">
+                            <div class="panel-body">
+                                Pay with cash upon delivery.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingbKash">
+                            <h4 class="panel-title">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="bKash" style="margin-top: 13px;">
+                                <label for="inlineRadio2">bKash<img alt="bKash" src="@Url.Content("~/images/bkash.png")" class="getway-image bkash"></label>
+                            </h4>
+                        </div>
+                        <div id="collapsebKash" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingbKash">
+                            <div class="panel-body">
+                                Please complete your bKash payment at first, then fill up the form below.
+                                <br />
+                                <br />
+                                <br />
+                                bKash Agent Number : 01933979657
+
+                                <br />
+                                <br />
+                                <label for="postcode">Transection number</label>
+                                <div class="input-box">
+                                    @Html.TextBoxFor(m => m.OrderTable.bKashTransectionNumber, new
+                               {
+                                   @class = "input-text dummy_bKash_required form-control",
+                                   title = "Transection number",
+                                   @error_msg = "Enter bKash transection number",
+                                   @placeholder = "8N7A6D5EE7M"
+
+                               })
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="hedingRocket">
+                            <h4 class="panel-title">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="Rocket" style="margin-top: 6px;">
+                                <label for="inlineRadio3">Rocket<img alt="bKash" src="@Url.Content("~/images/roket.png")" class="getway-image rocket"></label>
+                            </h4>
+                        </div>
+
+                        <div id="collapseRocket" class="panel-collapse collapse" role="tabpanel" aria-labelledby="hedingRocket">
+                            <div class="panel-body">
+                                Please complete your Rocket payment at first, then fill up the form below.
+                                <br />
+                                <br />
+                                <br />
+                                Rocket Agent Number : 01933979657
+
+                                <br />
+                                <br />
+                                <label for="postcode">Transection number</label>
+                                <div class="input-box">
+                                    @Html.TextBoxFor(m => m.OrderTable.RoketTransectionNumber, new
+                               {
+                                   @class = "input-text dummy_rocket_required form-control",
+                                   title = "Transection number",
+                                   @error_msg = "Enter Rocket transection number",
+                                   @placeholder = "8N7A6D5EE7M"
+
+                               })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="totals col-sm-4">
+                <h3>Shopping Cart Total</h3>
+                <div class="inner">
+                    <table class="table shopping-cart-table-total" id="shopping-cart-totals-table">
+                        <colgroup>
+                            <col>
+                            <col>
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td colspan="1" class="a-left"> Subtotal </td>
+                                <td class="a-right"><span class="price dummy_Cart_totals"></span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" class="a-left"> Shipping:  </td>
+                                <td class="a-right"><strong>$50</strong></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="1" class="a-left"><strong>Grand Total</strong></td>
+                                <td class="a-right"><strong><span class="price dummy_PriceWithCost">$00</span></strong></td>
+                            </tr>
+                        </tfoot>
+
+                    </table>
+                    <ul class="checkout">
+                        <li>
+                            <button type="submit" id="btnSubmitOrder" style="display: none;"></button>
+                            <button class="button btn-proceed-checkout" title="Proceed to Checkout" type="button" onclick="DoProcessCheckoutValidation(this);"><span>Proceed to Checkout</span></button>
+                        </li>
+                    </ul>
+                </div>
+                <!--inner-->
+
+            </div>
+        </div>
+    }
+
+}
+
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            //
+            $("#chkShipDifferentAddress").change(function () {
+                if ($(this).prop('checked')) {
+                    $(".different_address_form").slideDown("slow");
+                    $(".different_ship_field").addClass("required-entry");
+                } else {
+                    $(".different_ship_field").removeClass("required-entry");
+                    $(".different_address_form").slideUp("slow");
+                }
+            });
+
+
+            $("input[name='inlineRadioOptions']").click(function () {
+                var checkedValue = $("input[name='inlineRadioOptions']:checked").val();
+                console.log(checkedValue);
+                if (checkedValue == "Cash on delivery") {
+                    $("#collapseCashOnDelivery").collapse('show');
+                    $("#collapsebKash,#collapseRocket").collapse('hide');
+                    $("#Dummy_PaymentMethod").val("Cash on delivery");
+                    $(".dummy_rocket_required,.dummy_bKash_required").removeClass("required-entry");
+                } else if (checkedValue == "bKash") {
+                    $("#collapseCashOnDelivery,#collapseRocket").collapse('hide');
+                    $("#collapsebKash").collapse('show');
+                    $(".dummy_rocket_required").removeClass("required-entry");
+                    $(".dummy_bKash_required").addClass("required-entry");
+                    $("#Dummy_PaymentMethod").val("bKash");
+
+                } else if (checkedValue == "Rocket") {
+                    $("#collapseCashOnDelivery,#collapsebKash").collapse('hide');
+                    $("#collapseRocket").collapse('show');
+                    $(".dummy_bKash_required").removeClass("required-entry");
+                    $(".dummy_rocket_required").addClass("required-entry");
+                    $("#Dummy_PaymentMethod").val("Rocket");
+
+                } else {
+                    console.log("Oops.");
+                }
+            });
+        });
+
+        function DoProcessCheckoutValidation(elem) {
+
+            var browserCookie = GetCookie("VisitorRandomId");
+            $("#Dummy_Browser_TempCookie").val(browserCookie);
+
+            var isFormValid = $(".required-entry").MyFormValidation();
+
+            if (isFormValid == true) {
+                $(elem).prop("disabled", true);
+                $(elem).html(
+                  `<span class="spinner-border" role="status" aria-hidden="true"></span> <i class="fa fa-refresh fa-spin"></i> Processing`
+                );
+                $("#btnSubmitOrder").click();
+            }
+        }
+
+</script>

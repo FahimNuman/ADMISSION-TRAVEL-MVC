@@ -1,0 +1,138 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/Admin/_SuperAdminLayout.cshtml";
+}
+<script src="@Url.Content("~/dashboard-assets/jquery/infobox-2.js")"></script>
+<div class="block-header">
+    <h2>DASHBOARD</h2>
+</div>
+
+<!-- Widgets -->
+@if (ViewBag.DashbaordCounter != null)
+{
+    <div class="row clearfix">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box-3 bg-pink hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">account_box</i>
+                </div>
+                <div class="content">
+                    <div class="text">Agents</div>
+                    <div class="number count-to" data-from="0" data-to="@ViewBag.DashbaordCounter.Agents" data-speed="800" data-fresh-interval="20">@ViewBag.DashbaordCounter.Agents</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box-3 bg-red hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">all_out</i>
+                </div>
+                <div class="content">
+                    <div class="text">Route</div>
+                    <div class="number count-to" data-from="0" data-to="@ViewBag.DashbaordCounter.BusRoute" data-speed="800" data-fresh-interval="20">@ViewBag.DashbaordCounter.BusRoute</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box-3 bg-purple hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">bookmark</i>
+                </div>
+                <div class="content">
+                    <div class="text">Service Provider</div>
+                    <div class="number count-to" data-from="0" data-to="@ViewBag.DashbaordCounter.ServiceProvider" data-speed="800" data-fresh-interval="20">@ViewBag.DashbaordCounter.ServiceProvider</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box-3 bg-deep-purple hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">favorite</i>
+                </div>
+                <div class="content">
+                    <div class="text">Advantage</div>
+                    <div class="number count-to" data-from="0" data-to="@ViewBag.DashbaordCounter.Advantage" data-speed="800" data-fresh-interval="20">@ViewBag.DashbaordCounter.Advantage</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+}
+
+
+<div class="row clearfix">
+    <div class="col-md-12">
+        <div class="card">
+            @(Html.Kendo().Chart<Services.Domain.SuperAdmin.Admin_Get_Dashboard_Chart_Data>()
+                .Name("chartAmount")
+                .Title("Total sale amount on date")
+                .Legend(legend => legend
+                    .Position(ChartLegendPosition.Top)
+                )
+                .DataSource(ds => ds.Read(read => read.Action("GetDashboardChartData", "admin")))
+                .Series(series =>
+                {
+                    series.Column(model => model.C_Amount).Name("Total Sale").CategoryField("AmountDate");
+                })
+                .SeriesColors("#9C27B0")
+                .CategoryAxis(axis => axis
+                    .Labels(labels => labels.Rotation(-90))
+                    .MajorGridLines(lines => lines.Visible(false))
+                )
+                .ValueAxis(axis => axis.Numeric()
+                    .Labels(labels => labels.Format("{0:N0}"))
+                    .MajorUnit(20000)
+                    .Line(line => line.Visible(false))
+                )
+                .Tooltip(tooltip => tooltip
+                    .Visible(true)
+                    .Format("{0:N0}")
+                )
+            ) 
+        </div>
+    </div>
+</div>
+
+<div class="row clearfix">
+    <div class="col-md-12">
+        <div class="card">
+            @(Html.Kendo().Chart<Services.Domain.SuperAdmin.Admin_Get_Dashboard_Chart_Data>()
+                .Name("chartTicket")
+                .Title("Total ticket sale on date")
+                .Legend(legend => legend
+                    .Position(ChartLegendPosition.Top)
+                )
+                .DataSource(ds => ds.Read(read => read.Action("GetDashboardChartData", "admin")))
+                .Series(series =>
+                {
+                    series.Column(model => model.TicketSale).Name("Ticket Sale").CategoryField("SaleDate");
+                    
+                })
+                .SeriesColors("#673AB7 ")
+                .CategoryAxis(axis => axis
+                    .Labels(labels => labels.Rotation(-90))
+                    .MajorGridLines(lines => lines.Visible(false))
+                )
+                .ValueAxis(axis => axis.Numeric()
+                    .Labels(labels => labels.Format("{0:N0}"))
+                    .MajorUnit(40)
+                    .Line(line => line.Visible(false))
+                )
+                .Tooltip(tooltip => tooltip
+                    .Visible(true)
+                    .Format("{0:N0}")
+                )
+            )
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(".dummy_dashboard_link").addClass("active");
+    })
+
+</script>

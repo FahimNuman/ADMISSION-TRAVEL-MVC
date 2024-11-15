@@ -1,0 +1,109 @@
+﻿@model Services.Domain.Admin.OURADVANTAGES
+@{
+    ViewBag.Title = "Edit Advantage";
+    Layout = "~/Views/Shared/Admin/_SuperAdminLayout.cshtml";
+}
+<div class="row">
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <ol class="breadcrumb breadcrumb-bg-pink">
+                <li><a href="@Url.Action("dashboard", "admin")"><i class="material-icons">dashboard</i> Dashboard</a></li>
+                <li><a href="@Url.Action("AllAdvantages", "admin")"><i class="material-icons">card_membership</i> Advantages</a></li>
+                <li class="active">Edit Advantage</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        @using (Html.BeginForm("EditExistingAdvantagesInDb", "SuperAdmin", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", @autocomplete = "off" }))
+        {
+
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+
+            <div class="card">
+                <div class="header">
+                    <h2><i class="material-icons">done_all</i> Fill up this form carefully</h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li>
+                            <a class="btn bg-deep-purple waves-effect hover-expand-effect" href="@Url.Action("AllAdvantages", "admin")">
+                                <i class="material-icons">settings_backup_restore</i>
+                                <span>Back</span>
+                            </a>
+                        </li>
+                        <li>
+                            <button type="submit" class="btn btn-success waves-effect hover-expand-effect" onclick="return DoThisFormValidation();">
+                                <i class="material-icons">done</i>
+                                <span>Save</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body">
+                    <div class="clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                            <div class="form-group">
+                                <label for="Name">Show oh Page</label>
+                                <div class="form-break">
+                                    @Html.CheckBoxFor(m => m.ShowOnHomePage, new { @class = "switch", @Checked = "Checked" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-xs-12">
+                            <div class="form-group">
+                                <label for="Name">Details<em class="required">*</em></label>
+                                <div class="form-line">
+                                    @Html.TextAreaFor(m => m.Name, new
+                           {
+                               @class = "form-control required-entry",
+                               @id = "ComanyName",
+                               @required = "required",
+                               @error_msg = "Details is required",
+                           })
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12 col-sm-12 col-xs-12 mt-5">
+                            <div class="pull-right">
+                                <a class="btn bg-deep-purple waves-effect hover-expand-effect" href="@Url.Action("AllAdvantages", "admin")">
+                                    <i class="material-icons">settings_backup_restore</i>
+                                    <span>Back</span>
+                                </a>
+                                <button type="submit" class="btn btn-success waves-effect hover-expand-effect" onclick="return DoThisFormValidation();">
+                                    <i class="material-icons">done</i>
+                                    <span>Save</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+
+</div>
+<script type="text/javascript">
+
+    var fromDistrictId = 0;
+    $(document).ready(function () {
+        $(".dummy_Advantages_link").addClass("active");
+        $(".switch").bootstrapSwitch();
+    });
+
+
+    function DoThisFormValidation(){
+        var isFormValid = $(".required-entry").MyFormValidation();
+
+        return isFormValid;
+    }
+
+
+
+</script>
+
+

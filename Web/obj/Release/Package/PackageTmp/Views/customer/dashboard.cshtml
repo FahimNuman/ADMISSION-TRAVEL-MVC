@@ -1,0 +1,84 @@
+﻿@using Web.AppCode;
+@{
+    ViewBag.Title = "Customer Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- Main Container -->
+<div class="main-container col2-left-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-8 col-xs-12 col-sm-push-4 col-md-push-3">
+                <div class="col-main">
+                    <div class="my-account">
+                        <div class="dashboard">
+                            <div class="welcome-msg">
+                                <strong>Hello, @LoggedInUserInfoFromCookie.UserDisplayNameInCookie!</strong>
+                                
+                            </div>
+
+                            <div class="box-account">
+                                <div class="page-title">
+                                    <h2>Account Information</h2>
+                                </div>
+                                <div class="col2-set">
+                                    <div class="col-1">
+                                        <h5>Contact Information</h5>
+                                        <p>
+                                            John Doe<br>
+                                            @ViewBag.CustomerInformation.User.EmailAddress<br>
+                                            @ViewBag.CustomerInformation.User.PhoneNumber<br>
+                                        </p>
+                                    </div>
+                                    <div class="col-2">
+                                        <h5>Photo</h5>
+                                        @if (ViewBag.CustomerInformation.User.UserImagePath != null && ViewBag.CustomerInformation.User.UserImagePath != "")
+                                        {
+                                            <div class="image customer-image"> <img src="@Url.Content("~/" + ViewBag.CustomerInformation.User.UserImagePath)" width="48" height="48" alt="User" /></div>
+                                        }
+                                        else
+                                        {
+                                            <div class="image customer-image"> <img src="@Url.Content("~/dashboard-assets/images/user.png")" width="48" height="48" alt="User" /></div>
+                                        }
+
+                                    </div>
+                                </div>
+                                <div class="col2-set">
+                                    <h4>Address Book</h4>
+                                    <div class="col-1">
+                                        <h5>Your contact details</h5>
+                                        <address>
+                                            @LoggedInUserInfoFromCookie.UserDisplayNameInCookie<br>
+                                            Address one: @ViewBag.CustomerInformation.User.AddressOne<br>
+                                            Address two: @ViewBag.CustomerInformation.User.AddressTwo<br>
+                                            City: @ViewBag.CustomerInformation.User.City <br />
+                                            Address post code:@ViewBag.CustomerInformation.User.PostCode<br>
+                                            Country: @ViewBag.CustomerInformation.User.Country<br>
+                                        </address>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+                <!--	///*///======    End article  ========= //*/// -->
+            </div>
+            <aside class="col-left sidebar col-md-3 col-sm-4 col-xs-12 col-sm-pull-8 col-md-pull-9">
+                @Html.Action("_LoadPopularPost", "blog")
+            </aside>
+
+
+        </div>
+    </div>
+</div>
+<!-- Main Container End -->
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#mega-menu-category").css({ "display": "block" });
+    });
+</script>

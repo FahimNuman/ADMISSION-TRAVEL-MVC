@@ -1,0 +1,17 @@
+﻿@using Web.AppCode;
+@using Services.Domain.Admin;
+@if (LoggedInUserInfoFromCookie.UserDisplayNameInCookie != null && LoggedInUserInfoFromCookie.UserDisplayNameInCookie != "")
+{
+    <div class="container-fluid admin-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="nav navbar-nav">
+                        <li><a href="@Url.Action("dashboard", "admin")" target="_blank">Dashboard</a></li>
+                        <li><a href="@Url.Action("ProductList", "product")" target="_blank">Store</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,173 @@
+﻿@model Services.Domain.Admin.EmailRecoreds
+@{
+    ViewBag.Title = "Contact Us";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+}
+
+<div class="main-container col2-left-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-8 col-xs-12 col-sm-push-4 col-md-push-3">
+                <article class="col-main">
+                    <div class="page-title">
+                        <h2>Contac Us</h2>
+                    </div>
+                    <div class="static-contain">
+                        <div class="col-md-6">
+                            <h3 class="section-header">
+                                <span class="icon-box">
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                </span>
+                                &nbsp;Dial Customer Care
+                            </h3>
+                            <div class="advantage-box">
+                                <div class="icon-box small-box">
+                                    <i class="fa fa-mobile" aria-hidden="true"></i>
+                                </div>
+                                <div class="advantage-text">
+                                    @ViewBag.SiteSetting.CustomerCareNumber1
+                                </div>
+                            </div>
+                            <div class="advantage-box">
+                                <div class="icon-box small-box">
+                                    <i class="fa fa-mobile" aria-hidden="true"></i>
+                                </div>
+                                <div class="advantage-text">
+                                    @ViewBag.SiteSetting.CustomerCareNumber2
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h5 class="opening-time">
+                                <span class="icon-box">
+                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                </span>
+                                &nbsp;@ViewBag.SiteSetting.OfficeHours
+                            </h5>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="row">
+                            <h3 class="section-header">
+                                <span class="icon-box">
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                </span>
+                                &nbsp;Call for bus tickets and home delivery service
+                            </h3>
+
+                            @if (ViewBag.OurServiceProviders != null && ViewBag.OurServiceProviders.Count > 0)
+                            {
+                                for (int i = 0; i < ViewBag.OurServiceProviders.Count; i++)
+                                {
+                                    <div class="col-md-4 col-sm-3 col-xs-12">
+                                        <div class="advantage-box">
+                                            <div class="icon-box small-box">
+                                                <i class="fa fa-mobile" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="advantage-text">
+                                                @ViewBag.OurServiceProviders[i].ContactUsPageText
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <h3>Send a message</h3>
+                        <div class="contact-form-area registered-users">
+                            @using (Html.BeginForm("SendContactEmail", "agency", FormMethod.Post, new { @class = "form-horizontal", @id = "registration", role = "form", autocomplete = "off" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <ul class="form-list">
+                                    <li>
+                                        <label>First Name<span class="required">*</span></label>
+                                        @Html.TextBoxFor(m => m.Name, new
+                                   {
+                                       @class = "input-text required-entry",
+                                       title = "Name",
+                                       @error_msg = "Name is required"
+
+                                   })
+                                    </li>
+                                    <li>
+                                        <label>Subject<span class="required">*</span></label>
+                                        @Html.TextBoxFor(m => m.Subject, new
+                                   {
+                                       @class = "input-text required-entry",
+                                       title = "Subject",
+                                       @error_msg = "Subject is required"
+                                   })
+                                        <span class="validation-message" id="lastNameMessage"></span>
+                                    </li>
+                                    <li>
+                                        <label>Email<span class="required">*</span></label>
+                                        @Html.TextBoxFor(m => m.EmailAddress, new
+                                   {
+                                       @class = "input-text required-entry",
+                                       @type = "email",
+                                       title = "Email",
+                                       @value = "",
+                                       @data_validation = "email",
+                                       @error_msg = "Email name is required",
+                                       @expression_msg = "Email must be this form test@gmail.com"
+                                   })
+                                        <span class="validation-message" id="emailExistMessage"></span>
+                                    </li>
+                                    <li>
+                                        <label>Phone<span class="required">*</span></label>
+                                        @Html.TextBoxFor(m => m.Mobile, new
+                                   {
+                                       @class = "input-text required-entry",
+                                       title = "Phone",
+                                       @value = "",
+                                       @data_validation = "phone",
+                                       @error_msg = "Mobile number is required"
+                                   })
+                                    </li>
+
+                                    <li>
+                                        <label>Message<span class="required">*</span></label>
+                                        @Html.TextAreaFor(m => m.Message, new
+                                   {
+                                       @class = "input-text required-entry message-details",
+                                       title = "Message",
+                                       @value = "",
+                                       @row = "5",
+                                       @data_validation = "phone",
+                                       @error_msg = "Message is required"
+                                   })
+                                    </li>
+                                </ul>
+                                <p class="required">* Required Fields</p>
+                                <div class="buttons-set">
+                                    <button type="submit" class="button login" onclick="return DoContactFormValidation();" title="Send Message"><span>Send</span></button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </article>
+                <!--	///*///======    End article  ========= //*/// -->
+            </div>
+
+            <aside class="col-left sidebar col-md-3 col-sm-4 col-xs-12 col-sm-pull-8 col-md-pull-9">
+               @Html.Action("_LoadPopularPost", "blog")
+            </aside>
+
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function DoContactFormValidation() {
+        var isFormValid = $(".required-entry").MyFormValidation();
+        return isFormValid;
+    }
+
+</script>

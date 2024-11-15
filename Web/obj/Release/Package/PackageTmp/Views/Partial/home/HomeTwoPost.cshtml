@@ -1,0 +1,38 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="blog-outer-container">
+            <div class="block-title">
+                <h2>Latest News</h2>
+            </div>
+            <div class="blog-inner">
+                @{
+                    var count = 2;
+                    if (ViewBag.AllPostList.Count < 2)
+                    {
+                        count = ViewBag.AllPostList.Count;
+                    }
+
+
+
+                    for (var itemCount = 0; itemCount < count; itemCount++)
+                    {
+
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="entry-thumb image-hover2"> <a href="~/blog/details/@ViewBag.AllPostList[itemCount].Id"> <img alt="@ViewBag.AllPostList[itemCount].Title" src="@ViewBag.AllPostList[itemCount].FeaturedImagePath"> </a> </div>
+                            <div class="blog-preview_info">
+                                <h4 class="blog-preview_title"><a href="~/blog/details/@ViewBag.AllPostList[itemCount].Id">@ViewBag.AllPostList[itemCount].Title</a></h4>
+                                <ul class="post-meta">
+                                    <li><i class="fa fa-user"></i>posted by @ViewBag.AllPostList[itemCount].AdminName</li>
+                                    <li><i class="fa fa-comments"></i>@ViewBag.AllPostList[itemCount].TotalsComments comments</li>
+                                    <li><i class="fa fa-clock-o"></i><span class="day">@ViewBag.AllPostList[itemCount].CreatedDate.ToString("dd")</span> <span class="month">@ViewBag.AllPostList[itemCount].CreatedDate.ToString("MMM")</span></li>
+                                </ul>
+                                <div class="blog-preview_desc">@ViewBag.AllPostList[itemCount].SortDetails</div>
+                                <a class="blog-preview_btn" href="~/blog/details/@ViewBag.AllPostList[itemCount].Id">READ MORE</a>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

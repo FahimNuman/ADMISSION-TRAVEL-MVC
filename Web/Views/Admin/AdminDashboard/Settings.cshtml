@@ -1,0 +1,439 @@
+﻿@model Services.Domain.SuperAdmin.SettingsDataModel
+@{
+    ViewBag.Title = "Update Your Pages and Information";
+    Layout = "~/Views/Shared/Admin/_SuperAdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <ol class="breadcrumb breadcrumb-bg-pink">
+                <li><a href="@Url.Action("dashboard", "admin")"><i class="material-icons">dashboard</i> Dashboard</a></li>
+                <li><i class="material-icons">settings</i> Settings</li>
+            </ol>
+        </div>
+    </div>
+    <div class="card">
+        <div class="header">
+            <h2><i class="material-icons">done_all</i> Fill up this form carefully</h2>
+            <ul class="header-dropdown m-r--5">
+                <li>
+                    <a class="btn bg-deep-purple waves-effect hover-expand-effect" href="@Url.Action("dashboard", "admin")">
+                        <i class="material-icons">settings_backup_restore</i>
+                        <span>Back</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="body">
+            <div class="clearfix">
+                <ul class="nav nav-tabs">
+                    <li class="active dummy_tab_pane_active"><a data-toggle="tab" href="#tbSiteTettings">Site Settings</a></li>
+                    <li class="dummy_tab_pane_active"><a data-toggle="tab" href="#tbAboutUs">About Us</a></li>
+                    <li class="dummy_tab_pane_active"><a data-toggle="tab" href="#tbFAQ">FAQ</a></li>
+                    <li class="dummy_tab_pane_active"><a data-toggle="tab" href="#tbPrivacyPolicy">Privcy Policy</a></li>
+                    <li class="dummy_tab_pane_active"><a data-toggle="tab" href="#tbTermsCondition">Terms And Conditions</a></li>
+                </ul>
+
+                <div id="tbSiteTettings" class="tab-pane fade active in mt-5">
+                    <div class="col-md-12">
+                        <h5>Update your web site information here. Logo, Contact Location, Contact Number, Admin Email.</h5>
+                    </div>
+                    @using (Html.BeginForm("UpdateWebsiteInformation", "settings", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", @autocomplete = "off" }))
+                    {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.Setting.Id)
+
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                        <div class="form-group">
+                            <label for="Name">Admin Email<em class="required">*</em></label>
+                            <div class="form-line">
+                                @Html.TextBoxFor(m => m.Setting.AdminEmailAddress, new
+                               {
+                                   @class = "form-control required-entry",
+                                   @id = "Email",
+                                   @required = "required",
+                                   @data_validation = "email",
+                                   @expression_msg = "Email must be this form test@gmail.com",
+                                   @error_msg = "Email is required",
+                               })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                        <div class="form-group">
+                            <label for="Name">Contact Location<em class="required">*</em></label>
+                            <div class="form-line">
+                                @Html.TextBoxFor(m => m.Setting.ContactLocation, new
+                               {
+                                   @class = "form-control required-entry",
+                                   @id = "Location",
+                                   @required = "required",
+                                   @error_msg = "Location is required",
+                               })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                        <div class="form-group">
+                            <label for="Name">Contact Email<em class="required">*</em></label>
+                            <div class="form-line">
+                                @Html.TextBoxFor(m => m.Setting.ContactEmailAddress, new
+                               {
+                                   @class = "form-control required-entry",
+                                   @id = "ContactEmailAddress",
+                                   @required = "required",
+                                   @data_validation = "email",
+                                   @expression_msg = "Email must be this form test@gmail.com",
+                                   @error_msg = "Email is required",
+                               })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                        <div class="form-group">
+                            <label for="Name">Contact Number<em class="required">*</em></label>
+                            <div class="form-line">
+                                @Html.TextBoxFor(m => m.Setting.ContactMobile, new
+                               {
+                                   @class = "form-control required-entry",
+                                   @id = "ContactMobile",
+                                   @required = "required",
+                                   @error_msg = "Contact Number is required",
+                               })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                        <div class="form-group">
+                            <label for="Name">Support Number 1<em class="required">*</em></label>
+                            <div class="form-line">
+                                @Html.TextBoxFor(m => m.Setting.CustomerCareNumber1, new
+                               {
+                                   @class = "form-control required-entry",
+                                   @id = "CustomerCareNumber1",
+                                   @required = "required",
+                                   @error_msg = "Enter cutomer support number",
+                               })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                        <div class="form-group">
+                            <label for="Name">Support Number 2<em class="required">*</em></label>
+                            <div class="form-line">
+                                @Html.TextBoxFor(m => m.Setting.CustomerCareNumber2, new
+                               {
+                                   @class = "form-control required-entry",
+                                   @id = "CustomerCareNumber2",
+                                   @required = "required",
+                                   @error_msg = "Enter cutomer support number",
+                               })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label for="Name">Openinng Time &Aacute; Close Time<em class="required">*</em></label>
+                            <div class="form-line">
+                                @Html.TextBoxFor(m => m.Setting.OfficeHours, new
+                               {
+                                   @class = "form-control required-entry",
+                                   @id = "OfficeHours",
+                                   @required = "required",
+                                   @error_msg = "Office hours is required",
+                               })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">&nbsp;</div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <div class="form-line">
+                                @(Html.Kendo().Upload()
+                                    .Name("uPhotoUploder")
+                                    .Async(a => a
+                                        .Save("UploadProductsImage", "Common")
+                                        .AutoUpload(true)
+                                    )
+                                    .Multiple(false)
+                                    .DropZone("dropZoneElement")
+                                    .Events(events => events
+                                    .Select("onSelect")
+                                    .Success("onSuccess")
+                                    .Error("OErrorHandle")
+                                    )
+                                    .Messages(mess => mess.Select("Prodcut Photo"))
+                                    .HtmlAttributes(new { id = "customerPhoto" })
+                                    .Validation(validation =>
+                                    {
+                                        validation.AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" });
+                                        validation.MaxFileSize(512000);//500KB max
+                                    })
+                                )
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <div class="dummy_UserImageContainerDiv wow fadeInUp animated">
+                                    <img src="@Url.Content("~/" + Model.Setting.LogoURL)" id="divDefaultUploadedUserImg" class="img-responsive" alt="User Logo">
+                                </div>
+                                @Html.HiddenFor(m => m.Setting.LogoURL, new { id = "dummy_productImagePath", @error_msg = "Upload your product image", @class = "required-entry" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label for="Name">Header Info<em class="required">*</em></label>
+                            <div class="form-line">
+                                @(Html.Kendo().EditorFor(m => m.Setting.HeaderContactInfo)
+                                .HtmlAttributes(new
+                                {
+                                    style = "width:100%;height:440px;",
+                                    @class = "form-control required-entry",
+                                    aria_label = "editor",
+                                    id = "txtArHeaderContactInfo",
+                                })
+                                )
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-success waves-effect hover-expand-effect" onclick="return ValidateSiteSettigs();">Update Site Information</button>
+                    </div>
+                    }
+                </div>
+                <div id="tbAboutUs" class="tab-pane fade mt-5">
+                    <div class="col-md-12">
+                        <h5>Update your about us page details from here</h5>
+                    </div>
+                    @using (Html.BeginForm("UpdateAboutUsPage", "settings", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", @autocomplete = "off" }))
+
+                    {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.Setting.Id)
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        @(Html.Kendo().EditorFor(m => m.Setting.AboutUsPageDetails)
+                                .HtmlAttributes(new
+                                {
+                                    style = "width:100%;height:440px;",
+                                    @class = "form-control",
+                                    aria_label = "editor",
+                                    id = "txtArAboutUsPageDetails",
+                                })
+                        )
+                    </div>
+
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-success waves-effect hover-expand-effect">Update About Us</button>
+                    </div>
+                    }
+                </div>
+
+                <div id="tbFAQ" class="tab-pane fade mt-5">
+                    <div class="col-md-12">
+                        <h5>Update your Question and Answer page details from here</h5>
+                    </div>
+                    @using (Html.BeginForm("UpdateFAQPage", "settings", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", @autocomplete = "off" }))
+
+                    {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.Setting.Id)
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        @(Html.Kendo().EditorFor(m => m.Setting.FAQPageDetails)
+                                .HtmlAttributes(new
+                                {
+                                    style = "width:100%;height:440px;",
+                                    @class = "form-control",
+                                    aria_label = "editor",
+                                    id = "txtArFAQPageDetails",
+                                })
+                        )
+                    </div>
+
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-success waves-effect hover-expand-effect">Update FAQ</button>
+                    </div>
+                    }
+                </div>
+
+                <div id="tbPrivacyPolicy" class="tab-pane fade mt-5">
+                    <div class="col-md-12">
+                        <h5>Update your Privacy policy page details from here</h5>
+                    </div>
+                    @using (Html.BeginForm("UpdatPrivacyPolicyPage", "settings", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", @autocomplete = "off" }))
+
+                    {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.Setting.Id)
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        @(Html.Kendo().EditorFor(m => m.Setting.PrivacyPolicyPage)
+                                .HtmlAttributes(new
+                                {
+                                    style = "width:100%;height:440px;",
+                                    @class = "form-control",
+                                    aria_label = "editor",
+                                    id = "txtArPrivacyPolicyPage",
+                                })
+                        )
+                    </div>
+
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-success waves-effect hover-expand-effect">Update Privacy Policy</button>
+                    </div>
+                    }
+                </div>
+
+                <div id="tbTermsCondition" class="tab-pane fade mt-5">
+                    <div class="col-md-12">
+                        <h5>Update your Terms and Conditions page details from here</h5>
+                    </div>
+                    @using (Html.BeginForm("UpdatTermsAndConditionPage", "settings", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", @autocomplete = "off" }))
+
+                    {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.Setting.Id)
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        @(Html.Kendo().EditorFor(m => m.Setting.TermsAndConditionPage)
+                                .HtmlAttributes(new
+                                {
+                                    style = "width:100%;height:440px;",
+                                    @class = "form-control",
+                                    aria_label = "editor",
+                                    id = "txtArTermsAndConditionPage",
+                                })
+                        )
+                    </div>
+
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-success waves-effect hover-expand-effect">Update Terms and Conditions</button>
+                    </div>
+                    }
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(".dummy_catalog_link").addClass("active");
+        setTimeout(function () {
+            if ('@ViewBag.SuccessMessage' != null && '@ViewBag.SuccessMessage' != '') {
+                ShowAjaxNotificationMessage("Success", '@ViewBag.SuccessMessage', "success");
+            }
+
+            if ('@ViewBag.ErrorMessage' != null && '@ViewBag.ErrorMessage' != '') {
+                ShowAjaxNotificationMessage("Oops!", '@ViewBag.ErrorMessage', "warning");
+            }
+
+        }, 1000);
+
+        
+
+    });
+
+    function ValidateSiteSettigs() {
+
+        var isFormValid = $(".required-entry").MyFormValidation();
+        return isFormValid;
+    }
+
+
+    function addPreview(file) {
+        var raw = file.rawFile;
+        var reader = new FileReader();
+
+        if (raw) {
+            reader.onloadend = function () {
+                var preview = $("<img class='image-preview img-responsive dummy_divUplodedUserImg' id=''>").attr("src", this.result);
+                $(".dummy_UserImageContainerDiv").html(preview);
+                $('#divDefaultUploadedUserImg').hide();
+            };
+            reader.readAsDataURL(raw);
+        }
+    }
+
+
+    function onSelect(e) {
+
+        $("#divForProfileImageValidation").hide();
+        var files = e.files;
+
+        var fullImageName = e.files["0"].name;
+        var imageExtension = e.files["0"].extension;
+        var exactImageName = fullImageName.replace(imageExtension, "");
+        var fileInfo = e.files[0];
+        setTimeout(function () {
+            addPreview(fileInfo);
+        });
+
+        $.each(files, function () {
+            if (this.size > 512000 && exactImageName.length > 90) {
+
+                //image & name validation
+                alert("Maximum 500KB in size and 90 characters name are allowed for company logo.");
+
+                e.preventDefault();
+            }
+
+            if (this.size > 512000 && exactImageName.length <= 90) {
+
+                //image validation
+                alert("Maximum 500KB image allowed for company logo.");
+
+                e.preventDefault();
+            }
+
+            if (this.size <= 512000 && exactImageName.length > 90) {
+
+                //name validation
+                alert("Maximum 90 characters name allowed for company logo.");
+
+                e.preventDefault();
+            }
+        });
+    }
+
+    function OErrorHandle(e) {
+        try {
+            if (e.XMLHttpRequest.status == 200) {
+                $(".k-upload-files.k-reset").remove();
+            }
+
+            if (e.XMLHttpRequest.response) {
+                $("#dummy_productImagePath").val(e.XMLHttpRequest.response);
+
+            }
+
+        } catch (err) {
+
+        }
+    }
+
+    function onSuccess(e) {
+        try {
+            $("#dummy_productImagePath").val(e.response.Data);
+
+        }
+        catch (err) {
+
+        }
+    }
+
+</script>

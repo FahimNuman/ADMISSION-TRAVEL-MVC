@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="emartapp-001-site1" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\new-projects\\emart\\Web\\Web\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^D:\\new-projects\\emart\\Web\\Web\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=sql5002.site4now.net;Integrated Security=False;Initial Catalog=DB_A4AE11_emartapp;User Id=DB_A4AE11_emartapp_admin;Password=Password1!;Connect Timeout=300;Encrypt=False;" tags="">
+    <parameterEntry kind="XmlFile" scope="D:\\new-projects\\emart\\Web\\Web\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+</parameters>

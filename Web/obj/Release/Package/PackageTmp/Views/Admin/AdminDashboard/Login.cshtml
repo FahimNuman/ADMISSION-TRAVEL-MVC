@@ -1,0 +1,33 @@
+﻿@using Services.Domain.Models.User.EditorModel
+@model LoginModel
+@{
+    ViewBag.Title = "Login to EMART";
+    Layout = "~/Views/Shared/Admin/_LoginLayout.cshtml";
+}
+
+@using (Html.BeginForm("ProcessLogin", "admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+
+{
+    <div class="form-group">
+        <div class="form-label-group">
+            @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", @id= "inputEmail", @placeholder = "Email address", @required = "required", @type= "email", autofocus = "autofocus" })
+            <label for="inputEmail">Email address</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-label-group">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @required = "required", @id = "inputPassword", @type = "password" })
+            <label for="inputPassword">Password</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.RememberMe)
+                Remember Password
+            </label>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Login</button>
+}
+

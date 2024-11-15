@@ -1,0 +1,107 @@
+﻿@model Services.Domain.Admin.EmailRecoreds
+@{
+    ViewBag.Title = "Rate Us";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-container col2-left-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-8 col-xs-12 col-sm-push-4 col-md-push-3">
+                <article class="col-main">
+                    <div class="page-title">
+                        <h2>Rate Us</h2>
+                    </div>
+                    <div class="static-contain contact-form-area registered-users">
+                        @using (Html.BeginForm("SendContactEmail", "agency", FormMethod.Post, new { @class = "form-horizontal", @id = "registration", role = "form", autocomplete = "off" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <ul class="form-list">
+                                <li>
+                                    <label>First Name<span class="required">*</span></label>
+                                    @Html.TextBoxFor(m => m.Name, new
+                                   {
+                                       @class = "input-text required-entry",
+                                       title = "Name",
+                                       @error_msg = "Name is required"
+
+                                   })
+                                </li>
+                                <li>
+                                    <label>Subject<span class="required">*</span></label>
+                                    @Html.TextBoxFor(m => m.Subject, new
+                                   {
+                                       @class = "input-text required-entry",
+                                       title = "Subject",
+                                       @error_msg = "Subject is required"
+                                   })
+                                    <span class="validation-message" id="lastNameMessage"></span>
+                                </li>
+                                <li>
+                                    <label>Email<span class="required">*</span></label>
+                                    @Html.TextBoxFor(m => m.EmailAddress, new
+                                   {
+                                       @class = "input-text required-entry",
+                                       @type = "email",
+                                       title = "Email",
+                                       @value = "",
+                                       @data_validation = "email",
+                                       @error_msg = "Email name is required",
+                                       @expression_msg = "Email must be this form test@gmail.com"
+                                   })
+                                    <span class="validation-message" id="emailExistMessage"></span>
+                                </li>
+                                <li>
+                                    <label>Phone<span class="required">*</span></label>
+                                    @Html.TextBoxFor(m => m.Mobile, new
+                                   {
+                                       @class = "input-text required-entry",
+                                       title = "Phone",
+                                       @value = "",
+                                       @data_validation = "phone",
+                                       @error_msg = "Mobile number is required"
+                                   })
+                                </li>
+
+                                <li>
+                                    <label>Comments<span class="required">*</span></label>
+                                    @(Html.Kendo().EditorFor(m => m.Message)
+                                        .HtmlAttributes(new
+                                        {
+                                            style = "width:100%;height:200px;",
+                                            @class = "input-text required-entry message-details",
+                                            aria_label = "editor",
+                                            id = "txtArMessage",
+                                            @error_msg = "Message is required"
+                                        })
+                                    )
+                                </li>
+                            </ul>
+                                <p class="required">* Required Fields</p>
+                                <div class="buttons-set">
+                                    <button type="submit" class="button login" onclick="return DoContactFormValidation();" title="Send Message"><span>Send</span></button>
+                                </div>
+                        }
+                    </div>
+                </article>
+                <!--	///*///======    End article  ========= //*/// -->
+            </div>
+
+            <aside class="col-left sidebar col-md-3 col-sm-4 col-xs-12 col-sm-pull-8 col-md-pull-9">
+                @Html.Action("_LoadPopularPost", "blog")
+            </aside>
+
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    function DoContactFormValidation() {
+        var isFormValid = $(".required-entry").MyFormValidation();
+        return isFormValid;
+    }
+
+</script>

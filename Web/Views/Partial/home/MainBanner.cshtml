@@ -1,0 +1,14 @@
+﻿<div class="side-banner">
+    @if (ViewBag.SiteSetting != null && ViewBag.SiteSetting.H_BannerLink_Left != "")
+    {
+        <a href="@ViewBag.SiteSetting.H_BannerLink_Left" target="_blank">
+            <img src="@ViewBag.SiteSetting.H_BannerURL_Left" alt="banner" class="home-banner-left">
+        </a>
+    }
+    else
+    {
+        <img src="@ViewBag.SiteSetting.H_BannerURL_Left" alt="banner" class="home-banner-left">
+    }
+
+</div>
+

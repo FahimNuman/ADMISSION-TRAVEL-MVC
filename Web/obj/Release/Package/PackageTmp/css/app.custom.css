@@ -1,0 +1,400 @@
+﻿.account-login .registered-users .content .form-list label {
+    display: inline-block;
+    text-align: right;
+    width: 17%;
+    float: left;
+    padding: 10px 15px 0px;
+}
+
+.account-login .registered-users .content .form-list select {
+    width: 80%;
+    float: left;
+}
+
+span.validation-message.error-msg {
+    border: none !important;
+    display: block;
+    text-align: center;
+    padding: 1px !important;
+    background: none;
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+
+.logo img {
+    max-width: 225px;
+}
+
+a.forgot-word {
+    color: red;
+}
+
+a.no-child:after {
+    display: none !important;
+}
+
+.products-grid .item .item-inner .item-img .item-img-info a.product-image img {
+    min-height: 194px;
+    max-height: 194px;
+}
+
+.product-view .product-shop .add-to-box .btn-cart:hover {
+    text-shadow: none;
+    color: #fed700;
+}
+
+.mini-cart .view-cart, .mini-cart .btn-checkout {
+    padding: 8px !important;
+}
+
+img.getway-image {
+    display: inline-block;
+    margin-left: 13px;
+}
+
+    img.getway-image.rocket {
+        height: 27px;
+        width: 30px;
+    }
+
+.related-products .item .item-inner .item-img .item-img-info a.product-image img {
+    min-height: 230px;
+    max-height: 230px;
+    width: auto;
+}
+
+.ratings {
+    color: #e35300 !important;
+}
+
+.container-fluid.admin-bar li a:hover {
+    background: #fff;
+}
+
+.container-fluid.admin-bar li a {
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+.container-fluid.admin-bar {
+    background: #222;
+}
+
+.sort-by li li {
+    width: 160px;
+}
+
+.sort-by li {
+    width: 160px;
+}
+
+.pager {
+    margin: 0px 3px !important;
+}
+
+img.cp_image {
+    max-width: 50px !important;
+    max-height: 50px !important;
+    padding: 3px !important;
+    margin-right: 10px !important;
+    border: 1px solid #ccc !important;
+}
+
+/*Color Code*/
+.mega-menu-title {
+    color: #fff !important;
+    background: #ff6a00 !important;
+}
+
+.buy-btn {
+    color: #fff !important;
+    background: #ff6a00 !important;
+    border: 1px #ff6a00 solid !important;
+}
+
+    .buy-btn:after, .buy-btn:hover:after {
+        color: #fff !important;
+    }
+
+.category-product .navbar-nav > li.active a, .category-product .nav > li > a:hover, .category-product .nav > li > a:focus {
+    color: #fff !important;
+    background: #ff6a00 !important;
+}
+
+button.button, .newsletter-wrap button.subscribe {
+    color: #fff !important;
+    background: #ff6a00 !important;
+}
+
+    button.button:hover, .newsletter-wrap button.subscribe:hover {
+        color: #fff !important;
+        background: #e35300 !important;
+    }
+
+.products-grid .item .item-inner .item-info .info-inner .item-title a:hover, .products-grid .item:hover .item-inner .item-info .info-inner .item-title a {
+    color: #e35300 !important;
+}
+
+#search {
+    padding: 0 !important;
+    border: 2px solid #e35300;
+}
+
+.search-btn-bg {
+    top: 3px;
+}
+
+.mini-cart .basket a:before {
+    background: #e35300 !important;
+    color: #fff !important;
+}
+
+#toTop {
+    background-color: #e35300 !important;
+}
+/*Color Code*/
+
+.promotion-banner img {
+    max-height: 250px !important;
+}
+
+.button.coupon, .button.btn-continue, .button.continue, .button.login, button.btn-share, .button.create-account {
+    background-color: #e35300 !important;
+    color: #fff !important;
+}
+
+.image.customer-image img {
+    height: 100px;
+    width: 100px;
+}
+
+
+.icon-box {
+    width: 50px;
+    height: 50px;
+    background: #00be89;
+    border-radius: 150px;
+    display: block;
+    text-align: center;
+    font-size: 25px;
+    color: #fff;
+    line-height: 48px;
+    float: left;
+    margin-right: 20px;
+}
+
+.advantage-text {
+    display: block;
+    float: left;
+    font-size: 15px;
+    width: 70%;
+}
+
+.advantage-box {
+    display: block;
+    overflow: hidden;
+    padding: 15px 0px;
+    border-bottom: 1px dotted #ddd;
+}
+
+.section-header {
+    display: block;
+    width: 100%;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e35300;
+    overflow: hidden;
+    text-align: left;
+    line-height: 50px;
+    font-size: 20px;
+    color: #e35300 !important;
+}
+
+.icon-box.small-box {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    line-height: 38px;
+}
+
+.section-header .icon-box {
+    background: #e35300 !important;
+}
+
+.navbar.navbar-default.bus-main-menu {
+    background: none !important;
+    border: none !important;
+    background-color: transparent !important;
+}
+
+.header-container .toplinks div.links div a {
+    color: #fff !important;
+}
+
+.header-container {
+    background: #e35300 !important;
+    padding-bottom: 7px;
+    color: #fff !important;
+}
+
+nav {
+    background: #e35300 !important;
+}
+
+    nav .separator {
+        color: #fff !important;
+    }
+
+.logo {
+    margin: 0px !important;
+}
+
+
+.no-border {
+    border: none !important;
+}
+
+.contact-form-area .form-list label {
+    width: 80px;
+    margin-right: 7px;
+    text-align: right;
+}
+
+.contact-form-area .form-list li {
+    margin-bottom: 27px;
+}
+
+    .contact-form-area .form-list li .input-text {
+        width: 40%;
+    }
+
+    .contact-form-area .form-list li .message-details {
+        width: 90%;
+        min-height: 200px;
+    }
+
+.opening-time .icon-box {
+    background: #e35300 !important;
+}
+
+.opening-time {
+    display: block;
+    width: 100%;
+    padding-bottom: 8px;
+    overflow: hidden;
+    text-align: left;
+    line-height: 50px;
+    font-size: 16px;
+    color: #e35300 !important;
+}
+
+
+.footer-middle .col-md-4 {
+    border-left: 1px solid #444;
+    margin: auto;
+    padding: 35px 20px;
+    overflow: hidden;
+}
+
+.features-block {
+    background: transparent !important;
+}
+
+
+
+.seat {
+    background: url(https://demo.techbrij.com/780/images/available_seat_img.gif);
+    height: 35px;
+    width: 35px;
+    display: block;
+    background-size: 35px !important;
+    background-repeat: no-repeat !important;
+    cursor: pointer;
+}
+
+span.seat-gap {
+    width: 40px;
+    display: block;
+}
+
+.seat.selected {
+    background: url(https://demo.techbrij.com/780/images/selected_seat_img.gif);
+}
+
+.seat.sold-seat {
+    background: url(https://demo.techbrij.com/780/images/booked_seat_img.gif);
+}
+
+.driver {
+    background-image: url(../images/stairing.jpg);
+    height: 50px;
+    width: 50px;
+    display: block;
+    background-position: center top;
+    background-size: 46px;
+    background-repeat: no-repeat;
+    float: right;
+    margin-right: 15px;
+}
+
+.seat:hover {
+    background-color: rgba(255,255,255,.5) !important;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+
+@media only screen and (min-width: 768px) {
+    .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+        color: #e35300 !important;
+        background-color: transparent !important;
+    }
+}
+
+@media only screen and (min-width: 1023px) {
+    .bus-main-menu .navbar-nav {
+        padding-top: 40px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+        color: #fff;
+        background-color: #e35300 !important;
+    }
+
+    .contact-form-area .form-list li .input-text {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .contact-form-area .form-list label {
+        width: 100%;
+        margin-right: 7px;
+        text-align: left;
+    }
+}
+
+
+.k-window-titlebar.k-header {
+    background: indigo;
+    color: #fff !important;
+}
+
+img.img-seat-loader {
+    padding: 100px;
+}
+.blog_entry .featured-thumb.listed-blog a img {
+    max-height: 400px;
+}
+
+.footer .contacts-info i:before {
+    background: #e35300  !important;
+    border-color: #e35300  !important;
+    color: #fff !important;
+}

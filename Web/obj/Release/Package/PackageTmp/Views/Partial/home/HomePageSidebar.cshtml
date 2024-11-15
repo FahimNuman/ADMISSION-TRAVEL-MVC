@@ -1,0 +1,106 @@
+﻿
+
+<div class="custom-slider-wrap">
+    <div class="custom-slider-inner">
+        <div class="home-custom-slider">
+            <div>
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        @for (var itemCount = 0; itemCount < ViewBag.AdvertismentSlider.Count; itemCount++)
+                        {
+                            <li class="listed-child" data-target="#carousel-example-generic" data-slide-to="@itemCount"></li>
+                        }
+                    </ol>
+                    <div class="carousel-inner">
+                        @for (var itemCount = 0; itemCount < ViewBag.AdvertismentSlider.Count; itemCount++)
+                        {
+                            <div class="item listed-child">
+                                <img src="@Url.Content("~" + ViewBag.AdvertismentSlider[itemCount].ImagePath)" alt="@ViewBag.AdvertismentSlider[itemCount].Caption">
+                                <div class="carousel-caption">
+                                    <span>@ViewBag.AdvertismentSlider[itemCount].Name</span>
+                                    <p>@ViewBag.AdvertismentSlider[itemCount].SortDescription</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <a class="left carousel-control" href="#" data-slide="prev"> <span class="sr-only">Previous</span> </a> <a class="right carousel-control" href="#" data-slide="next"> <span class="sr-only">Next</span> </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hot-deal">
+    <ul class="products-grid">
+        <li class="right-space two-height item">
+            <div class="item-inner">
+                <div class="item-img">
+                    <div class="item-img-info">
+                        <a href="#" title="Retis lapen casen" class="product-image"> <img src="https://via.placeholder.com/800x800" alt="Retis lapen casen"> </a>
+                        <div class="hot-label hot-top-left">Hot Deal</div>
+                        <div class="box-hover">
+                            <ul class="add-to-links">
+                                <li><a class="link-quickview" href="quick_view.html"></a></li>
+                                <li><a class="link-wishlist" href="wishlist.html"></a></li>
+                                <li><a class="link-compare" href="compare.html"></a></li>
+                            </ul>
+                        </div>
+                        <div class="box-timer">
+                            <div class="timer-grid countbox_1" data-time="2020/02/01"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-info">
+                    <div class="info-inner">
+                        <div class="item-title"> <a href="product_detail.html" title="Retis lapen casen"> Retis lapen casen </a> </div>
+                        <div class="item-content">
+                            <div class="rating">
+                                <div class="ratings">
+                                    <div class="rating-box">
+                                        <div class="rating width80"></div>
+                                    </div>
+                                    <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                </div>
+                            </div>
+                            <div class="item-price">
+                                <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
+                            </div>
+                            <div class="action">
+                                <button data-original-title="Add to Cart" title="" type="button" class="button btn-cart"><span>Add to Cart</span> </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="testimonials">
+    <div class="ts-testimonial-widget">
+        <div class="slider-items-products">
+            <div id="testimonials-slider" class="product-flexslider hidden-buttons home-testimonials">
+                <div class="slider-items slider-width-col4 fadeInUp">
+                    @for (var itemCount = 0; itemCount < ViewBag.AdvertismentSlider.Count; itemCount++)
+                    {
+                        <div class="holder">
+                            <div class="thumb"> <img src="@Url.Content("~" + ViewBag.FeedbackSlider[itemCount].ImagePath)" alt="@ViewBag.FeedbackSlider[itemCount].AuthorName)"> </div>
+                            <p>@ViewBag.FeedbackSlider[itemCount].SortDescription</p>
+                            <div class="line"></div>
+                            <strong class="name">@ViewBag.FeedbackSlider[itemCount].AuthorName</strong>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="featured-add-box">
+    <div class="featured-add-inner">
+        <a href="#"> <img src="https://via.placeholder.com/263x450" alt="f-img"></a>
+        <div class="banner-content">
+            <div class="banner-text">Women's</div>
+            <div class="banner-text1">49% off</div>
+            <p>on selected products</p>
+            <a href="#" class="view-bnt">Shop now</a>
+        </div>
+    </div>
+</div>

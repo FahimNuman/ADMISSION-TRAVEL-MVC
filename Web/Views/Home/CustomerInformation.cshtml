@@ -1,0 +1,117 @@
+﻿@model Services.Domain.Admin.PassengerInformation
+@{
+    ViewBag.Title = "Customer Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-container col2-left-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-8 col-xs-12 col-sm-push-4 col-md-push-3">
+                <article class="col-main">
+                    <div class="page-title">
+                        <h2>Customer Informatin</h2>
+                    </div>
+                    <div class="static-contain">
+                        <div class="col-md-6 no-padding">
+                            @using (Html.BeginForm("SaveBookingInformation", "Common", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", @autocomplete = "off" }))
+                            {
+                                <div class="form-box">
+                                    <label class="control-label col-md-12 no-padding text-left">Name</label>
+                                    <div class="form-group col-md-8">
+                                        @Html.TextBoxFor(m => m.C_Name, new
+                                   {
+                                       @class = "form-control required-entry",
+                                       @id = "Name",
+                                       @required = "required",
+                                       @error_msg = "Name is required",
+                                   })
+                                    </div>
+                                </div>
+
+                                <div class="form-box">
+                                    <label class="control-label col-md-12 no-padding text-left">Phone Number</label>
+                                    <div class="form-group col-md-8">
+                                        @Html.TextBoxFor(m => m.C_Phone, new
+                                   {
+                                       @class = "form-control required-entry",
+                                       @id = "C_Phone",
+                                       @required = "required",
+                                       @error_msg = "Phone number required",
+                                   })
+                                    </div>
+                                </div>
+
+                                <div class="form-box">
+                                    <label class="control-label col-md-12 no-padding text-left">Payment Number</label>
+                                    <div class="form-group col-md-8">
+                                        @Html.TextBoxFor(m => m.C_PaymentNumber, new
+                                   {
+                                       @class = "form-control required-entry",
+                                       @id = "C_PaymentNumber",
+                                       @required = "required",
+                                       @error_msg = "Payment phone number required",
+                                   })
+                                    </div>
+                                </div>
+
+                                <div class="form-box">
+                                    <label class="control-label col-md-12 no-padding text-left">Transection Id</label>
+                                    <div class="form-group col-md-8">
+                                        @Html.TextBoxFor(m => m.C_TransectionNumber, new
+                                   {
+                                       @class = "form-control required-entry",
+                                       @id = "C_TransectionNumber",
+                                       @required = "required",
+                                       @error_msg = "bKash/Rocket transection number required",
+                                   })
+                                    </div>
+                                </div>
+                                <div class="form-box">
+                                    <div class="form-group col-md-12">
+                                        <button type="submit" class="btn btn-success" onclick="return DoCustomerInformationValidation();">Book Now</button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <h5> Your ticket details</h5>
+                            <div class="form-group">
+                                <label>Bus numbers:  @ViewBag.BusNumbers</label>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Seat:  @ViewBag.TotalSeat</label>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Price:  @ViewBag.TotalPrice</label>
+                            </div>
+                            <div class="form-group">
+                                <label>Details:  @ViewBag.PricePerLoop</label>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <!--	///*///======    End article  ========= //*/// -->
+            </div>
+
+            <aside class="col-left sidebar col-md-3 col-sm-4 col-xs-12 col-sm-pull-8 col-md-pull-9">
+               @Html.Action("_LoadPopularPost", "blog")
+            </aside>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    function DoCustomerInformationValidation() {
+        var isFormValid = $(".required-entry").MyFormValidation();
+        return isFormValid;
+    }
+
+</script>

@@ -1,0 +1,567 @@
+﻿<div class="content-page">
+    <div class="category-product">
+        <div class="navbar nav-menu">
+            <div class="navbar-collapse">
+                <div class="new_title">
+                    <h2>@ViewBag.CategoryProductList.Setting.H_SectionOneTitle</h2>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a data-toggle="tab" href="#tab-1">@ViewBag.CategoryProductList.Categories.CategoryName1</a></li>
+                    <li><a data-toggle="tab" href="#tab-2">@ViewBag.CategoryProductList.Categories.CategoryName2</a></li>
+                    <li><a data-toggle="tab" href="#tab-3">@ViewBag.CategoryProductList.Categories.CategoryName3</a></li>
+                    <li><a data-toggle="tab" href="#tab-4">@ViewBag.CategoryProductList.Categories.CategoryName4</a></li>
+                    <li><a data-toggle="tab" href="#tab-5">@ViewBag.CategoryProductList.Categories.CategoryName5</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <div class="product-bestseller">
+            <div class="product-bestseller-content">
+                <div class="product-bestseller-list">
+                    <div class="tab-container">
+                        <!-- tab product -->
+                        <div class="tab-panel active" id="tab-1">
+                            <div class="category-products">
+                                <ul class="products-grid">
+                                    @if (ViewBag.CategoryProductList != null && ViewBag.CategoryProductList.ProductListOne != null && ViewBag.CategoryProductList.ProductListOne.Count > 0)
+                                    {
+                                        for (int item = 0; item < ViewBag.CategoryProductList.ProductListOne.Count; item++)
+                                        {
+
+                                            <li class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                                                <div class="item-inner">
+                                                    <div class="item-img">
+                                                        <div class="item-img-info">
+                                                            <a href="~/product/details/@ViewBag.CategoryProductList.ProductListOne[item].Id" title="@ViewBag.CategoryProductList.ProductListOne[item].Name" class="product-image"><img src="@Url.Content("~/" + ViewBag.CategoryProductList.ProductListOne[item].ImageURL)" alt="@ViewBag.CategoryProductList.ProductListOne[item].Name"></a>
+                                                            @*<div class="new-label new-top-left">New</div>*@
+                                                            <div class="box-hover">
+                                                                <ul class="add-to-links">
+                                                                    <li><a class="link-quickview" href="~/product/details/@ViewBag.CategoryProductList.ProductListOne[item].Id"></a></li>
+                                                                    <li><a class="link-wishlist" href="wishlist.html"></a></li>
+                                                                    <li><a class="link-compare" href="compare.html"></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <div class="info-inner">
+                                                            <div class="item-title"> <a title="Retis lapen casen" href="~/product/details/@ViewBag.CategoryProductList.ProductListOne[item].Id"> @ViewBag.CategoryProductList.ProductListOne[item].Name </a> </div>
+                                                            <div class="item-content">
+                                                                <div class="rating">
+                                                                    <div class="ratings">
+                                                                        @if (ViewBag.CategoryProductList.ProductListOne[item].Rating >= 2 && ViewBag.CategoryProductList.ProductListOne[item].Rating <= 2.7M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListOne[item].Rating > 2.7M && ViewBag.CategoryProductList.ProductListOne[item].Rating <= 3.2M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListOne[item].Rating > 3.2M && ViewBag.CategoryProductList.ProductListOne[item].Rating <= 3.7M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListOne[item].Rating > 3.7M && ViewBag.CategoryProductList.ProductListOne[item].Rating <= 4.2M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListOne[item].Rating > 4.2M && ViewBag.CategoryProductList.ProductListOne[item].Rating <= 4.7M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListOne[item].Rating > 4.7M && ViewBag.CategoryProductList.ProductListOne[item].Rating <= 6)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        }
+                                                                        <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="item-price">
+                                                                    <div class="price-box">
+                                                                        @if (ViewBag.CategoryProductList.ProductListOne[item].OldPrice != null)
+                                                                        {
+                                                                            <p class="old-price"><span class="price-label">Regular Price:</span> <span class="price">$@ViewBag.CategoryProductList.ProductListOne[item].OldPrice </span> </p>
+                                                                            <p class="special-price"><span class="price-label">Special Price</span> <span class="price">$@ViewBag.CategoryProductList.ProductListOne[item].Price </span> </p>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="regular-price"><span class="price">$@ViewBag.CategoryProductList.ProductListOne[item].Price</span> </span>
+                                                                        }
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="action">
+                                                                    <button class="button btn-cart" type="button" title="Add to Cart" pid="@ViewBag.CategoryProductList.ProductListOne[item].Id" data-original-title="Add to Cart"><span>Add to Cart</span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- tab product -->
+                        <div class="tab-panel" id="tab-2">
+                            <div class="category-products">
+                                <ul class="products-grid">
+                                    @if (ViewBag.CategoryProductList != null && ViewBag.CategoryProductList.ProductListTwo != null && ViewBag.CategoryProductList.ProductListTwo.Count > 0)
+                                    {
+                                        for (int item = 0; item < ViewBag.CategoryProductList.ProductListTwo.Count; item++)
+                                        {
+
+                                            <li class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                                                <div class="item-inner">
+                                                    <div class="item-img">
+                                                        <div class="item-img-info">
+                                                            <a href="~/product/details/@ViewBag.CategoryProductList.ProductListTwo[item].Id" title="@ViewBag.CategoryProductList.ProductListTwo[item].Name" class="product-image"><img src="@Url.Content("~/" + ViewBag.CategoryProductList.ProductListTwo[item].ImageURL)" alt="@ViewBag.CategoryProductList.ProductListTwo[item].Name"></a>
+                                                            @*<div class="new-label new-top-left">New</div>*@
+                                                            <div class="box-hover">
+                                                                <ul class="add-to-links">
+                                                                    <li><a class="link-quickview" href="~/product/details/@ViewBag.CategoryProductList.ProductListTwo[item].Id"></a></li>
+                                                                    <li><a class="link-wishlist" href="wishlist.html"></a></li>
+                                                                    <li><a class="link-compare" href="compare.html"></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <div class="info-inner">
+                                                            <div class="item-title"> <a title="Retis lapen casen" href="~/product/details/@ViewBag.CategoryProductList.ProductListTwo[item].Id"> @ViewBag.CategoryProductList.ProductListTwo[item].Name </a> </div>
+                                                            <div class="item-content">
+                                                                <div class="rating">
+                                                                    <div class="ratings">
+                                                                        @if (ViewBag.CategoryProductList.ProductListTwo[item].Rating >= 2 && ViewBag.CategoryProductList.ProductListTwo[item].Rating <= 2.7M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListTwo[item].Rating > 2.7M && ViewBag.CategoryProductList.ProductListTwo[item].Rating <= 3.2M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListTwo[item].Rating > 3.2M && ViewBag.CategoryProductList.ProductListTwo[item].Rating <= 3.7M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListTwo[item].Rating > 3.7M && ViewBag.CategoryProductList.ProductListTwo[item].Rating <= 4.2M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListTwo[item].Rating > 4.2M && ViewBag.CategoryProductList.ProductListTwo[item].Rating <= 4.7M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListTwo[item].Rating > 4.7M && ViewBag.CategoryProductList.ProductListTwo[item].Rating <= 6)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        }
+                                                                        <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="item-price">
+                                                                    <div class="price-box">
+                                                                        @if (ViewBag.CategoryProductList.ProductListTwo[item].OldPrice != null)
+                                                                        {
+                                                                            <p class="old-price"><span class="price-label">Regular Price:</span> <span class="price">$@ViewBag.CategoryProductList.ProductListTwo[item].OldPrice </span> </p>
+                                                                            <p class="special-price"><span class="price-label">Special Price</span> <span class="price">$@ViewBag.CategoryProductList.ProductListTwo[item].Price </span> </p>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="regular-price"><span class="price">$@ViewBag.CategoryProductList.ProductListTwo[item].Price</span> </span>
+                                                                        }
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="action">
+                                                                    <button class="button btn-cart" type="button" title="Add to Cart" pid="@ViewBag.CategoryProductList.ProductListTwo[item].Id" data-original-title="Add to Cart"><span>Add to Cart</span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tab-panel" id="tab-3">
+                            <div class="category-products">
+                                <ul class="products-grid">
+                                    @if (ViewBag.CategoryProductList != null && ViewBag.CategoryProductList.ProductListThree != null && ViewBag.CategoryProductList.ProductListThree.Count > 0)
+                                    {
+                                        for (int item = 0; item < ViewBag.CategoryProductList.ProductListThree.Count; item++)
+                                        {
+
+                                            <li class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                                                <div class="item-inner">
+                                                    <div class="item-img">
+                                                        <div class="item-img-info">
+                                                            <a href="~/product/details/@ViewBag.CategoryProductList.ProductListThree[item].Id" title="@ViewBag.CategoryProductList.ProductListThree[item].Name" class="product-image"><img src="@Url.Content("~/" + ViewBag.CategoryProductList.ProductListThree[item].ImageURL)" alt="@ViewBag.CategoryProductList.ProductListThree[item].Name"></a>
+                                                            @*<div class="new-label new-top-left">New</div>*@
+                                                            <div class="box-hover">
+                                                                <ul class="add-to-links">
+                                                                    <li><a class="link-quickview" href="~/product/details/@ViewBag.CategoryProductList.ProductListThree[item].Id"></a></li>
+                                                                    <li><a class="link-wishlist" href="wishlist.html"></a></li>
+                                                                    <li><a class="link-compare" href="compare.html"></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <div class="info-inner">
+                                                            <div class="item-title"> <a title="Retis lapen casen" href="~/product/details/@ViewBag.CategoryProductList.ProductListThree[item].Id"> @ViewBag.CategoryProductList.ProductListThree[item].Name </a> </div>
+                                                            <div class="item-content">
+                                                                <div class="rating">
+                                                                    <div class="ratings">
+                                                                        @if (ViewBag.CategoryProductList.ProductListThree[item].Rating >= 2 && ViewBag.CategoryProductList.ProductListThree[item].Rating <= 2.7M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListThree[item].Rating > 2.7M && ViewBag.CategoryProductList.ProductListThree[item].Rating <= 3.2M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListThree[item].Rating > 3.2M && ViewBag.CategoryProductList.ProductListThree[item].Rating <= 3.7M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListThree[item].Rating > 3.7M && ViewBag.CategoryProductList.ProductListThree[item].Rating <= 4.2M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListThree[item].Rating > 4.2M && ViewBag.CategoryProductList.ProductListThree[item].Rating <= 4.7M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListThree[item].Rating > 4.7M && ViewBag.CategoryProductList.ProductListThree[item].Rating <= 6)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        }
+                                                                        <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="item-price">
+                                                                    <div class="price-box">
+                                                                        @if (ViewBag.CategoryProductList.ProductListThree[item].OldPrice != null)
+                                                                        {
+                                                                            <p class="old-price"><span class="price-label">Regular Price:</span> <span class="price">$@ViewBag.CategoryProductList.ProductListThree[item].OldPrice </span> </p>
+                                                                            <p class="special-price"><span class="price-label">Special Price</span> <span class="price">$@ViewBag.CategoryProductList.ProductListThree[item].Price </span> </p>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="regular-price"><span class="price">$@ViewBag.CategoryProductList.ProductListThree[item].Price</span> </span>
+                                                                        }
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="action">
+                                                                    <button class="button btn-cart" type="button" title="Add to Cart" pid="@ViewBag.CategoryProductList.ProductListThree[item].Id" data-original-title="Add to Cart"><span>Add to Cart</span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <div class="tab-panel" id="tab-4">
+                            <div class="category-products">
+                                <ul class="products-grid">
+                                    @if (ViewBag.CategoryProductList != null && ViewBag.CategoryProductList.ProductListFour != null && ViewBag.CategoryProductList.ProductListFour.Count > 0)
+                                    {
+                                        for (int item = 0; item < ViewBag.CategoryProductList.ProductListFour.Count; item++)
+                                        {
+
+                                            <li class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                                                <div class="item-inner">
+                                                    <div class="item-img">
+                                                        <div class="item-img-info">
+                                                            <a href="~/product/details/@ViewBag.CategoryProductList.ProductListFour[item].Id" title="@ViewBag.CategoryProductList.ProductListFour[item].Name" class="product-image"><img src="@Url.Content("~/" + ViewBag.CategoryProductList.ProductListFour[item].ImageURL)" alt="@ViewBag.CategoryProductList.ProductListFour[item].Name"></a>
+                                                            @*<div class="new-label new-top-left">New</div>*@
+                                                            <div class="box-hover">
+                                                                <ul class="add-to-links">
+                                                                    <li><a class="link-quickview" href="~/product/details/@ViewBag.CategoryProductList.ProductListFour[item].Id"></a></li>
+                                                                    <li><a class="link-wishlist" href="wishlist.html"></a></li>
+                                                                    <li><a class="link-compare" href="compare.html"></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <div class="info-inner">
+                                                            <div class="item-title"> <a title="Retis lapen casen" href="~/product/details/@ViewBag.CategoryProductList.ProductListFour[item].Id"> @ViewBag.CategoryProductList.ProductListFour[item].Name </a> </div>
+                                                            <div class="item-content">
+                                                                <div class="rating">
+                                                                    <div class="ratings">
+                                                                        @if (ViewBag.CategoryProductList.ProductListFour[item].Rating >= 2 && ViewBag.CategoryProductList.ProductListFour[item].Rating <= 2.7M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListFour[item].Rating > 2.7M && ViewBag.CategoryProductList.ProductListFour[item].Rating <= 3.2M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListFour[item].Rating > 3.2M && ViewBag.CategoryProductList.ProductListFour[item].Rating <= 3.7M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListFour[item].Rating > 3.7M && ViewBag.CategoryProductList.ProductListFour[item].Rating <= 4.2M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListFour[item].Rating > 4.2M && ViewBag.CategoryProductList.ProductListFour[item].Rating <= 4.7M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListFour[item].Rating > 4.7M && ViewBag.CategoryProductList.ProductListFour[item].Rating <= 6)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        }
+                                                                        <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="item-price">
+                                                                    <div class="price-box">
+                                                                        @if (ViewBag.CategoryProductList.ProductListFour[item].OldPrice != null)
+                                                                        {
+                                                                            <p class="old-price"><span class="price-label">Regular Price:</span> <span class="price">$@ViewBag.CategoryProductList.ProductListFour[item].OldPrice </span> </p>
+                                                                            <p class="special-price"><span class="price-label">Special Price</span> <span class="price">$@ViewBag.CategoryProductList.ProductListFour[item].Price </span> </p>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="regular-price"><span class="price">$@ViewBag.CategoryProductList.ProductListFour[item].Price</span> </span>
+                                                                        }
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="action">
+                                                                    <button class="button btn-cart" type="button" title="Add to Cart" pid="@ViewBag.CategoryProductList.ProductListFour[item].Id" data-original-title="Add to Cart"><span>Add to Cart</span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tab-panel" id="tab-5">
+                            <div class="category-products">
+                                <ul class="products-grid">
+                                    @if (ViewBag.CategoryProductList != null && ViewBag.CategoryProductList.ProductListFive != null && ViewBag.CategoryProductList.ProductListFive.Count > 0)
+                                    {
+                                        for (int item = 0; item < ViewBag.CategoryProductList.ProductListFive.Count; item++)
+                                        {
+
+                                            <li class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                                                <div class="item-inner">
+                                                    <div class="item-img">
+                                                        <div class="item-img-info">
+                                                            <a href="~/product/details/@ViewBag.CategoryProductList.ProductListFive[item].Id" title="@ViewBag.CategoryProductList.ProductListFive[item].Name" class="product-image"><img src="@Url.Content("~/" + ViewBag.CategoryProductList.ProductListFive[item].ImageURL)" alt="@ViewBag.CategoryProductList.ProductListFive[item].Name"></a>
+                                                            @*<div class="new-label new-top-left">New</div>*@
+                                                            <div class="box-hover">
+                                                                <ul class="add-to-links">
+                                                                    <li><a class="link-quickview" href="~/product/details/@ViewBag.CategoryProductList.ProductListFive[item].Id"></a></li>
+                                                                    <li><a class="link-wishlist" href="wishlist.html"></a></li>
+                                                                    <li><a class="link-compare" href="compare.html"></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <div class="info-inner">
+                                                            <div class="item-title"> <a title="Retis lapen casen" href="~/product/details/@ViewBag.CategoryProductList.ProductListFive[item].Id"> @ViewBag.CategoryProductList.ProductListFive[item].Name </a> </div>
+                                                            <div class="item-content">
+                                                                <div class="rating">
+                                                                    <div class="ratings">
+                                                                        @if (ViewBag.CategoryProductList.ProductListFive[item].Rating >= 2 && ViewBag.CategoryProductList.ProductListFive[item].Rating <= 2.7M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListFive[item].Rating > 2.7M && ViewBag.CategoryProductList.ProductListFive[item].Rating <= 3.2M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListFive[item].Rating > 3.2M && ViewBag.CategoryProductList.ProductListFive[item].Rating <= 3.7M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListFive[item].Rating > 3.7M && ViewBag.CategoryProductList.ProductListFive[item].Rating <= 4.2M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListFive[item].Rating > 4.2M && ViewBag.CategoryProductList.ProductListFive[item].Rating <= 4.7M)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                        }
+                                                                        else if (ViewBag.CategoryProductList.ProductListFive[item].Rating > 4.7M && ViewBag.CategoryProductList.ProductListFive[item].Rating <= 6)
+                                                                        {
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        }
+                                                                        <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="item-price">
+                                                                    <div class="price-box">
+                                                                        @if (ViewBag.CategoryProductList.ProductListFive[item].OldPrice != null)
+                                                                        {
+                                                                            <p class="old-price"><span class="price-label">Regular Price:</span> <span class="price">$@ViewBag.CategoryProductList.ProductListFive[item].OldPrice </span> </p>
+                                                                            <p class="special-price"><span class="price-label">Special Price</span> <span class="price">$@ViewBag.CategoryProductList.ProductListFive[item].Price </span> </p>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="regular-price"><span class="price">$@ViewBag.CategoryProductList.ProductListFive[item].Price</span> </span>
+                                                                        }
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="action">
+                                                                    <button class="button btn-cart" type="button" title="Add to Cart" pid="@ViewBag.CategoryProductList.ProductListFive[item].Id" data-original-title="Add to Cart"><span>Add to Cart</span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

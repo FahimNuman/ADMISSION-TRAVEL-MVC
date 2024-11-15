@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Feedbacks";
+    Layout = "~/Views/Shared/Admin/_SuperAdminLayout.cshtml";
+}
+
+
+<div class="row">
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <ol class="breadcrumb breadcrumb-bg-pink">
+                <li><a href="@Url.Action("dashboard", "admin")"><i class="material-icons">dashboard</i> Dashboard</a></li>
+                <li class="active"><i class="material-icons">email</i> Feedbacks</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>All Feedback</h2>
+            </div>
+            <div class="body">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Subject</th>
+                                <th>Mobile</th>
+                                <th>Email</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Subject</th>
+                                <th>Mobile</th>
+                                <th>Email</th>
+                                <th>Time</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @for (var itemCount = 0; itemCount < ViewBag.FeedbackList.Count; itemCount++)
+                            {
+
+                                <tr>
+                                    <td>@ViewBag.FeedbackList[itemCount].Id</td>
+                                    <td>@ViewBag.FeedbackList[itemCount].Name</td>
+                                    <td>@ViewBag.FeedbackList[itemCount].Subject</td>
+                                    <td>@ViewBag.FeedbackList[itemCount].Mobile</td>
+                                    <td>@ViewBag.FeedbackList[itemCount].EmailAddress</td>
+                                    <td>@ViewBag.FeedbackList[itemCount].SendingTime.ToString("dd MMM yyyy")</td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(".dummy_Feedback_link").addClass("active");
+
+    })
+
+</script>

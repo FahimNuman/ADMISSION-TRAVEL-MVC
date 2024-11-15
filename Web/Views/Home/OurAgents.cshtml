@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "Our Agents";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="main-container col2-left-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-8 col-xs-12 col-sm-push-4 col-md-push-3">
+                <article class="col-main">
+                    <div class="page-title">
+                        <h2>Our Agents</h2>
+                    </div>
+                    <div class="static-contain">
+                        <ul class="products-grid">
+                            @if (ViewBag.OurAgentList != null && ViewBag.OurAgentList.Count > 0)
+                            {
+
+                                for (int i = 0; i < ViewBag.OurAgentList.Count; i++)
+                                {
+
+                                    <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                        <div class="item-inner">
+                                            <div class="item-img">
+                                                <div class="item-img-info">
+                                                    <a href="#" title="@ViewBag.OurAgentList[i].UserFullName" class="product-image">
+                                                        @if (ViewBag.OurAgentList[i].UserImagePath != null)
+                                                        {
+                                                            <img src="@Url.Content("~/"+ViewBag.OurAgentList[i].UserImagePath)" alt="@ViewBag.OurAgentList[i].UserFullName">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="~/dashboard-assets/images/user.png" alt="@ViewBag.OurAgentList[i].UserFullName">
+                                                        }
+                                                        
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="item-info">
+                                                <div class="info-inner">
+                                                    <div class="item-title"> <a title="@ViewBag.OurAgentList[i].UserFullName" href="#"> @ViewBag.OurAgentList[i].UserFullName </a> </div>
+                                                    <div class="item-content">
+                                                        @if (ViewBag.OurAgentList[i].PhoneNumber != null)
+                                                        {
+                                                            <span>Contact: @ViewBag.OurAgentList[i].PhoneNumber</span><br />
+                                                        }
+                                                        else {
+                                                            <span>Contact: N/A</span><br />
+                                                        }
+
+                                                        @if (ViewBag.OurAgentList[i].AddressOne != null)
+                                                        {
+                                                            <span>Office name: @ViewBag.OurAgentList[i].AddressOne</span><br />
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>Office name: N/A</span><br />
+                                                        }
+
+                                                        @if (ViewBag.OurAgentList[i].AddressTwo != null)
+                                                        {
+                                                            <span>Sub Office: @ViewBag.OurAgentList[i].AddressTwo</span><br />
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>Sub Office: N/A</span><br />
+                                                        }
+
+                                                        @if (ViewBag.OurAgentList[i].City != null)
+                                                        {
+                                                            <span>City: @ViewBag.OurAgentList[i].City</span><br />
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>City: N/A</span><br />
+                                                        }
+                                                        @if (ViewBag.OurAgentList[i].EmailAddress != null)
+                                                        {
+                                                            <span>Email: @ViewBag.OurAgentList[i].EmailAddress</span><br />
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>Email: N/A</span><br />
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            }
+                            
+                        </ul>
+                    </div>
+                </article>
+                <!--	///*///======    End article  ========= //*/// -->
+            </div>
+
+            <aside class="col-left sidebar col-md-3 col-sm-4 col-xs-12 col-sm-pull-8 col-md-pull-9">
+                @Html.Action("_LoadPopularPost", "blog")
+            </aside>
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,751 @@
+﻿@model Services.Domain.Admin.TicketBookingHistoryUpdateModel
+@{
+    ViewBag.Title = "Student Service";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="main-container col2-left-layout">
+    <div class="container">
+        @using (Html.BeginForm("BookSelectedSeat", "Common", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", @autocomplete = "off" }))
+        {
+            @Html.HiddenFor(m => m.seatList, new { @id= "hdnSelectedSeatList" })
+            @Html.HiddenFor(m => m.fromId, new { @id = "hdnSelectedFromId" })
+            @Html.HiddenFor(m => m.toId, new { @id = "hdnSelectedToDistanceId" })
+            @Html.HiddenFor(m => m.startTime, new { @id = "hdnSelectedStartTime" })
+            @Html.HiddenFor(m => m.FromText, new { @id = "hdnSelectedFromText" })
+            @Html.HiddenFor(m => m.DistenceText, new { @id = "hdnSelectedDistenceText" })
+            @Html.HiddenFor(m => m.DepartDate, new { @id = "hdnSelectedDepartDate" })
+            @Html.HiddenFor(m => m.TicketPrice, new { @id = "hdnSelectedTicketPrice" })
+            @Html.HiddenFor(m => m.BusNumber, new { @id = "hdnSelectedBusNumber" })
+            @Html.HiddenFor(m => m.IsReturn, new { @id = "hdnSelectedIsReturn" })
+            @Html.HiddenFor(m => m.ReturnDate, new { @id = "hdnSelectedReturnDate" })
+            @Html.HiddenFor(m => m.btnMode, new { @id = "hdnClickedBtnMode" })
+            <button type="submit" style="display: none;" id="btnUpdateSeatPlan"></button>
+        }
+
+        <div class="row">
+            <div class="col-md-9 col-sm-8 col-xs-12 col-sm-push-4 col-md-push-3">
+                <article class="col-main">
+                    <div class="page-title">
+                        @if (ViewBag.TotalTicket ==null || ViewBag.TotalTicket.ToString() == "0")
+                        {
+                            <h2>Book Ticket Now</h2>
+                        }
+                        else
+                        {
+                            <h2>Already you have @ViewBag.TotalTicket tickets, book more now. </h2>
+                        }
+
+                    </div>
+                    <div class="static-contain">
+
+                        <div class="col-sm-6">
+                            <div class="form-box">
+                                <label class="control-label">From</label>
+                                <div class="form-group">
+                                    @(Html.Kendo().ComboBox()
+                                .Name("cmbFromDistrictListInBD")
+                                .DataTextField("FromName")
+                                .DataValueField("FromID")
+                                .HtmlAttributes(new
+                                {
+                                    @class = "required-entry",
+                                    style = "width: 70%;",
+                                    id = "cmbFromDistrictList",
+                                    @Value= ViewBag.FromValue,
+                                })
+                                .DataSource(source =>
+                                {
+                                    source.Read(read =>
+                                    {
+                                        read.Action("GetTravelFromSourceDataList", "Common");
+                                    });
+                                })
+                                    )
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <label class="control-label">To</label>
+                                <div class="form-group">
+                                    <input type="text" id="cmbToDistanceList" style="width: 70%;" />
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <label class="control-label">Depart on</label>
+                                <div class="form-group">
+                                    @(Html.Kendo().DatePicker()
+                                      .Name("clnFromDate")
+                                      .Events(e =>
+                                      {
+                                          e.Change("OnChangeTravelDate");
+                                      })
+                                      .HtmlAttributes(new { style = "width: 70%", title = "From Date" })
+                                    )
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <label class="control-label">Time</label>
+                                <div class="form-group">
+                                    <input type="text" id="cmbTimeScheduleList" style="width: 70%;" />
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <label class="control-label">Price</label>
+                                <div class="form-group">
+                                    <span class="dummy_ticket_price">0</span>
+                                    <input type="text" id="txtPricePerSeat" style="width: 70%;" class="form-control hidden" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <label class="control-label">Return</label>
+                                <div class="form-group">
+                                    <input type="checkbox" id="chkIsReturnDate" style="width: 70%;" />
+                                </div>
+                            </div>
+
+                            <div class="form-box dummy_Is_return_Element" style="display: none;">
+                                <label class="control-label">Date</label>
+                                <div class="form-group">
+                                    @(Html.Kendo().DatePicker()
+                                      .Name("clnReturnDate")
+                                      .HtmlAttributes(new { style = "width: 70%", title = "Return Date" })
+                                    )
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <table style="min-width: 200px; display: none;" id="seatListTableViewForUser">
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td><span class="seat-gap"></span></td>
+                                    <td colspan="2"><span class="driver"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td><span class="seat-gap"></span></td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="seat seat1" title="1" data-val="1"></span></td>
+                                    <td><span class="seat seat2" title="2" data-val="2"></span></td>
+                                    <td><span class="seat-gap"></span></td>
+                                    <td><span class="seat seat3 " title="3" data-val="3"></span></td>
+                                    <td><span class="seat seat4" title="4" data-val="4"></span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="seat seat5" title="5" data-val="5"></span></td>
+                                    <td><span class="seat seat6" title="6" data-val="6"></span></td>
+                                    <td><span class="seat-gap"></span></td>
+                                    <td><span class="seat seat7" title="7" data-val="7"></span></td>
+                                    <td><span class="seat seat8" title="8" data-val="8"></span></td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="seat seat9" title="9" data-val="9"></span></td>
+                                    <td><span class="seat seat10" title="10" data-val="10"></span></td>
+                                    <td><span class="seat-gap"></span></td>
+                                    <td><span class="seat seat11" title="11" data-val="11"></span></td>
+                                    <td><span class="seat seat12" title="12" data-val="12"></span></td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="seat seat13" title="13" data-val="13"></span></td>
+                                    <td><span class="seat seat14" title="14" data-val="14"></span></td>
+                                    <td><span class="seat-gap"></span></td>
+                                    <td><span class="seat seat15" title="15" data-val="15"></span></td>
+                                    <td><span class="seat seat16" title="16" data-val="16"></span></td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="seat seat17" title="17" data-val="17"></span></td>
+                                    <td><span class="seat seat18" title="18" data-val="18"></span></td>
+                                    <td><span class="seat-gap"></span></td>
+                                    <td><span class="seat seat19" title="19" data-val="19"></span></td>
+                                    <td><span class="seat seat20" title="20" data-val="20"></span></td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="seat seat21" title="21" data-val="21"></span></td>
+                                    <td><span class="seat seat22" title="22" data-val="22"></span></td>
+                                    <td><span class="seat-gap"></span></td>
+                                    <td><span class="seat seat23" title="23" data-val="23"></span></td>
+                                    <td><span class="seat seat24" title="24" data-val="24"></span></td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="seat seat25" title="25" data-val="25"></span></td>
+                                    <td><span class="seat seat26" title="26" data-val="26"></span></td>
+                                    <td><span class="seat-gap"></span></td>
+                                    <td><span class="seat seat27" title="27" data-val="27"></span></td>
+                                    <td><span class="seat seat28" title="28" data-val="28"></span></td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="seat seat29" title="29" data-val="29"></span></td>
+                                    <td><span class="seat seat30" title="30" data-val="30"></span></td>
+                                    <td><span class="seat-gap"></span></td>
+                                    <td><span class="seat seat31" title="31" data-val="31"></span></td>
+                                    <td><span class="seat seat32" title="32" data-val="32"></span></td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="seat seat33" title="33" data-val="33"></span></td>
+                                    <td><span class="seat seat34" title="34" data-val="34"></span></td>
+                                    <td><span class="seat-gap"></span></td>
+                                    <td><span class="seat seat35" title="35" data-val="35"></span></td>
+                                    <td><span class="seat seat36" title="36" data-val="36"></span></td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="seat seat37" title="37" data-val="37"></span></td>
+                                    <td><span class="seat seat38" title="38" data-val="38"></span></td>
+                                    <td><span class="seat-gap"></span></td>
+                                    <td><span class="seat seat39" title="39" data-val="39"></span></td>
+                                    <td><span class="seat seat40" title="40" data-val="40"></span></td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="seat seat41" title="41" data-val="41"></span></td>
+                                    <td><span class="seat seat42" title="42" data-val="42"></span></td>
+                                    <td><span class="seat seat43" title="43" data-val="43"></span></td>
+                                    <td><span class="seat seat44" title="44" data-val="44"></span></td>
+                                    <td><span class="seat seat45" title="45" data-val="45"></span></td>
+                                </tr>
+
+                            </table>
+
+                            <div id="dummy_SeatLoader" style="display: none;">
+                                <img src="@Url.Content("~/kendo/css/Material/loading_2x.gif")" class="img-seat-loader" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button class="btn btn-success" onclick="DoBokingValidation('book');">Go</button>
+                            <button class="btn btn-success btn_more_trip" onclick="DoBokingValidation('more');">More Trip</button>
+                        </div>
+                    </div>
+                </article>
+                <!--	///*///======    End article  ========= //*/// -->
+            </div>
+
+            <aside class="col-left sidebar col-md-3 col-sm-4 col-xs-12 col-sm-pull-8 col-md-pull-9">
+                @Html.Action("_LoadPopularPost", "blog")
+            </aside>
+
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var fromDistrictId = 0;
+    var distinitionDistricCombo;
+    var allDistrictComboBox;
+    var fromId = 0;
+    var toId = 0;
+    $(document).ready(function () {
+        $(".seat").click(function () {
+            if ($(this).hasClass("sold-seat")) {
+                return false;
+            } else {
+                if ($(this).hasClass("selected")) {
+                    $(this).removeClass("selected");
+                } else if ($(this).hasClass("seat")) {
+                    $(this).addClass("selected");
+                }
+            }
+
+
+            var strList = "";
+            $(".seat").each(function () {
+                if ($(this).hasClass("selected")) {
+                    var strvalue = $.trim($(this).attr("data-val"));
+                    if (strList == "") {
+                        strList = strvalue;
+                    } else {
+                        strList = strList + "," + strvalue;
+                    }
+                }
+            });
+            $("#hdnSelectedSeatList").val(strList);
+        })
+
+        allDistrictComboBox = $("#cmbFromDistrictList").data("kendoComboBox");
+        fromDistrictId = '@ViewBag.FromValue';
+        
+        if(@ViewBag.ReadOnly == true){
+            allDistrictComboBox.enable(false);
+        }
+
+        LoadDistinationDistric(fromDistrictId);
+        LoadTimeScheduleList(fromId, toId);
+
+        allDistrictComboBox.bind("change", function () {
+            distinitionDistricCombo.value("");
+            if ((allDistrictComboBox.selectedIndex === -1 && allDistrictComboBox.value()) || allDistrictComboBox.value() == "") {
+                LoadDistinationDistric(0);
+                LoadTimeScheduleList(fromId, toId);
+                ResetFiltering();
+            }
+            else {
+                fromId = allDistrictComboBox.value();
+                LoadDistinationDistric(fromId);
+                LoadTimeScheduleList(fromId, toId);
+            }
+        });
+
+        $("#chkIsReturnDate").bootstrapSwitch({
+            onSwitchChange: OnChangeReturnDateSwitch
+        });
+
+        var fromDatePicker = $("#clnFromDate").data("kendoDatePicker");
+        var toDateTpicker = $("#clnReturnDate").data("kendoDatePicker");
+
+        fromDatePicker.setOptions({
+            min: '@ViewBag.MinDate'
+        });
+        fromDatePicker.value('@ViewBag.MinDate');
+
+
+        fromDatePicker.bind("change", function () {
+            if (fromDatePicker.value() != null && fromDatePicker.value() != "") {
+                var targetDate = fromDatePicker.value();
+                var addDays = 3;
+                var newDate = kendo.date.addDays(targetDate, addDays);
+                toDateTpicker.setOptions({
+                    max: newDate
+                });
+            }
+        });
+
+        if (fromDatePicker.value() != null && fromDatePicker.value() != "") {
+            var targetDate = fromDatePicker.value();
+            var addDays = 3;
+            var newDate = kendo.date.addDays(targetDate, addDays);
+            var rDate = kendo.date.addDays(targetDate, 1);
+            toDateTpicker.setOptions({
+                max: newDate,
+                min: rDate
+            });
+        }
+
+    });
+
+
+    function OnChangeTravelDate() {
+
+        timeScheduleListCombo.value("");
+        ResetFiltering();
+    }
+
+    function OnChangeReturnDateSwitch() {
+        if ($("#chkIsReturnDate").is(':checked')) {
+            $(".dummy_Is_return_Element").show();
+            $(".btn_more_trip").hide();
+        }
+        else {
+            $(".dummy_Is_return_Element").hide();
+        }
+    }
+
+
+    function LoadDistinationDistric(fromDistrictId) {
+
+        $.get("/Common/GetTravelToDataRemoveFromId", { id: fromDistrictId }, function (data) {
+
+            var dataSource = new kendo.data.DataSource({
+                data: data
+            });
+            $("#cmbToDistanceList").kendoComboBox({
+                placeholder: "Please choose",
+                filter: "contains",
+                dataTextField: "ToName",
+                dataValueField: "ToId",
+                autoBind: true,
+                selectable: true,
+                dataSource: dataSource,
+                suggest: true
+            });
+            distinitionDistricCombo = $("#cmbToDistanceList").data("kendoComboBox");
+
+            if (fromDistrictId == "0") {
+                distinitionDistricCombo.value("");
+                distinitionDistricCombo.enable(false);
+            } else {
+                distinitionDistricCombo.enable();
+            }
+
+            distinitionDistricCombo.bind("change", function () {
+                if ((distinitionDistricCombo.selectedIndex === -1 && distinitionDistricCombo.value()) || distinitionDistricCombo.value() == "") {
+                    LoadTimeScheduleList(fromId, toId);
+                    ResetFiltering();
+                }
+                else {
+                    toId = distinitionDistricCombo.value();
+                    LoadTimeScheduleList(fromId, toId)
+                }
+            });
+
+        });
+    }
+
+    function LoadTimeScheduleList(fromId, toId) {
+
+        $.get("/Common/GetBusTimeScheduleListByFromAndToId", { fromId: fromId, toId: toId }, function (data) {
+
+
+            var dataSource = new kendo.data.DataSource({
+                data: data
+            });
+            $("#cmbTimeScheduleList").kendoComboBox({
+                placeholder: "Please choose",
+                filter: "contains",
+                dataTextField: "StartTime",
+                dataValueField: "Id",
+                autoBind: true,
+                selectable: true,
+                dataSource: dataSource,
+                suggest: true
+            });
+
+            timeScheduleListCombo = $("#cmbTimeScheduleList").data("kendoComboBox");
+
+
+            if (data.length <= 0)
+                ResetFiltering();
+
+            timeScheduleListCombo.bind("change", function () {
+                if (timeScheduleListCombo.selectedIndex === -1 && timeScheduleListCombo.value()) {
+
+                }
+                else {
+                    var selectedItem = timeScheduleListCombo.dataItem(timeScheduleListCombo.select());
+                    if (selectedItem) {
+                        $("#dummy_SeatLoader").show();
+                        $(".dummy_ticket_price").text(selectedItem.RatePerSeat);
+                        $("#txtPricePerSeat").val(selectedItem.RatePerSeat);
+
+                        var travDate = $.trim($("#clnFromDate").val());
+
+                        setTimeout(function () {
+                            $("#dummy_SeatLoader").hide();
+                            $("#seatListTableViewForUser").show();
+
+                        }, 2000);
+
+                        $.get("/Common/GetTicketBookingHistoryByParam", { fromId: fromId, toId: toId, startTime: selectedItem.StartTime, travelDate: travDate }, function (list) {
+
+                            if (list.length > 0) {
+
+                                for (i = 0; i < list.length; i++) {
+                                    var item = list[i];
+
+                                    if (item.S1 != null && item.S1 == true)
+                                        $(".seat1.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat1.seat").removeClass("sold-seat");
+
+                                    if (item.S2 != null && item.S2 == true)
+                                        $(".seat2.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat2.seat").removeClass("sold-seat");
+
+                                    if (item.S3 != null && item.S3 == true)
+                                        $(".seat3.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat3.seat").removeClass("sold-seat");
+
+
+                                    if (item.S4 != null && item.S4 == true)
+                                        $(".seat4.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat4.seat").removeClass("sold-seat");
+
+                                    if (item.S5 != null && item.S5 == true)
+                                        $(".seat5.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat5.seat").removeClass("sold-seat");
+
+                                    if (item.S6 != null && item.S6 == true)
+                                        $(".seat6.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat6.seat").removeClass("sold-seat");
+
+                                    if (item.S7 != null && item.S7 == true)
+                                        $(".seat7.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat7.seat").removeClass("sold-seat");
+
+                                    if (item.S8 != null && item.S8 == true)
+                                        $(".seat8.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat8.seat").removeClass("sold-seat");
+
+                                    if (item.S9 != null && item.S9 == true)
+                                        $(".seat9.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat9.seat").removeClass("sold-seat");
+
+                                    if (item.S10 != null && item.S10 == true)
+                                        $(".seat10.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat10.seat").removeClass("sold-seat");
+
+                                    if (item.S11 != null && item.S11 == true)
+                                        $(".seat11.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat11.seat").removeClass("sold-seat");
+
+                                    if (item.S12 != null && item.S12 == true)
+                                        $(".seat12.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat12.seat").removeClass("sold-seat");
+
+                                    if (item.S13 != null && item.S13 == true)
+                                        $(".seat13.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat13.seat").removeClass("sold-seat");
+
+                                    if (item.S14 != null && item.S14 == true)
+                                        $(".seat14.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat14.seat").removeClass("sold-seat");
+
+                                    if (item.S15 != null && item.S15 == true)
+                                        $(".seat15.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat15.seat").removeClass("sold-seat");
+
+                                    if (item.S16 != null && item.S16 == true)
+                                        $(".seat16.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat16.seat").removeClass("sold-seat");
+
+                                    if (item.S17 != null && item.S17 == true)
+                                        $(".seat17.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat17.seat").removeClass("sold-seat");
+
+
+                                    if (item.S18 != null && item.S18 == true)
+                                        $(".seat18.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat18.seat").removeClass("sold-seat");
+
+                                    if (item.S19 != null && item.S19 == true)
+                                        $(".seat19.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat19.seat").removeClass("sold-seat");
+
+                                    if (item.S20 != null && item.S20 == true)
+                                        $(".seat20.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat20.seat").removeClass("sold-seat");
+
+                                    if (item.S21 != null && item.S21 == true)
+                                        $(".seat21.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat21.seat").removeClass("sold-seat");
+
+                                    if (item.S22 != null && item.S22 == true)
+                                        $(".seat22.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat22.seat").removeClass("sold-seat");
+
+                                    if (item.S23 != null && item.S23 == true)
+                                        $(".seat23.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat23.seat").removeClass("sold-seat");
+
+                                    if (item.S24 != null && item.S24 == true)
+                                        $(".seat24.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat24.seat").removeClass("sold-seat");
+
+                                    if (item.S25 != null && item.S25 == true)
+                                        $(".seat25.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat25.seat").removeClass("sold-seat");
+
+                                    if (item.S26 != null && item.S26 == true)
+                                        $(".seat26.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat26.seat").removeClass("sold-seat");
+
+                                    if (item.S27 != null && item.S27 == true)
+                                        $(".seat27.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat27.seat").removeClass("sold-seat");
+
+                                    if (item.S28 != null && item.S28 == true)
+                                        $(".seat28.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat28.seat").removeClass("sold-seat");
+
+                                    if (item.S29 != null && item.S29 == true)
+                                        $(".seat29.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat29.seat").removeClass("sold-seat");
+
+                                    if (item.S30 != null && item.S30 == true)
+                                        $(".seat30.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat30.seat").removeClass("sold-seat");
+
+                                    if (item.S31 != null && item.S31 == true)
+                                        $(".seat31.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat31.seat").removeClass("sold-seat");
+
+                                    if (item.S32 != null && item.S32 == true)
+                                        $(".seat32.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat32.seat").removeClass("sold-seat");
+
+                                    if (item.S33 != null && item.S33 == true)
+                                        $(".seat33.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat33.seat").removeClass("sold-seat");
+
+                                    if (item.S34 != null && item.S34 == true)
+                                        $(".seat34.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat34.seat").removeClass("sold-seat");
+
+                                    if (item.S35 != null && item.S35 == true)
+                                        $(".seat35.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat35.seat").removeClass("sold-seat");
+
+                                    if (item.S36 != null && item.S36 == true)
+                                        $(".seat36.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat36.seat").removeClass("sold-seat");
+
+
+                                    if (item.S37 != null && item.S37 == true)
+                                        $(".seat37.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat37.seat").removeClass("sold-seat");
+
+                                    if (item.S38 != null && item.S38 == true)
+                                        $(".seat38.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat38.seat").removeClass("sold-seat");
+
+                                    if (item.S39 != null && item.S39 == true)
+                                        $(".seat39.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat39.seat").removeClass("sold-seat");
+
+                                    if (item.S40 != null && item.S40 == true)
+                                        $(".seat40.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat40.seat").removeClass("sold-seat");
+
+                                    if (item.S41 != null && item.S41 == true)
+                                        $(".seat41.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat41.seat").removeClass("sold-seat");
+
+                                    if (item.S42 != null && item.S42 == true)
+                                        $(".seat42.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat42.seat").removeClass("sold-seat");
+
+                                    if (item.S43 != null && item.S43 == true)
+                                        $(".seat43.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat43.seat").removeClass("sold-seat");
+
+                                    if (item.S44 != null && item.S44 == true)
+                                        $(".seat44.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat44.seat").removeClass("sold-seat");
+
+                                    if (item.S45 != null && item.S45 == true)
+                                        $(".seat45.seat").addClass("sold-seat");
+                                    else
+                                        $(".seat45.seat").removeClass("sold-seat");
+
+
+                                }
+                            } else {
+                                $(".seat").removeClass("sold-seat");
+                                $(".seat").removeClass("selected");
+                            }
+
+                        });
+                    } else {
+                        ResetFiltering();
+                    }
+
+                }
+            });
+
+        });
+
+    }
+
+
+    function ResetFiltering() {
+        $("#dummy_SeatLoader").hide();
+        timeScheduleListCombo.value("");
+        $(".dummy_ticket_price").text("0");
+        $("#txtPricePerSeat").val("0");
+        $("#seatListTableViewForUser").hide();
+    }
+
+    function DoBokingValidation(mode) {
+        var slectedValue = $.trim($("#hdnSelectedSeatList").val());
+        if (slectedValue == "") {
+            alert("Please select a seat");
+        } else {
+            var fromDate = $("#clnFromDate").data("kendoDatePicker").value();
+            var returnDate = $("#clnReturnDate").data("kendoDatePicker").value();
+            if (fromDate == null) {
+                alert("Enter travel date");
+                return false;
+            }
+            var isReturn = "0";
+
+            if ($("#chkIsReturnDate").is(':checked')) {
+                isReturn = "1";
+                if (returnDate == null) {
+                    alert("Enter return date");
+                    return false;
+                }
+            }
+
+            var time = timeScheduleListCombo.value();
+            var selectedItem = timeScheduleListCombo.dataItem(timeScheduleListCombo.select());
+
+            if (selectedItem) {
+
+                $("#hdnSelectedFromId").val(fromId);
+                $("#hdnSelectedToDistanceId").val(toId);
+                $("#hdnSelectedStartTime").val(selectedItem.StartTime);
+                $("#hdnSelectedBusNumber").val(selectedItem.BusNumber);
+                $("#hdnSelectedFromText").val(allDistrictComboBox.text());
+                $("#hdnSelectedDistenceText").val(distinitionDistricCombo.text());
+                $("#hdnSelectedDepartDate").val($.trim($("#clnFromDate").val()));
+                $("#hdnSelectedTicketPrice").val($.trim($(".dummy_ticket_price").text()));
+                $("#hdnSelectedIsReturn").val(isReturn);
+                $("#hdnClickedBtnMode").val(mode);
+                $("#hdnSelectedReturnDate").val($.trim($("#clnReturnDate").val()));
+                $("#btnUpdateSeatPlan").click();
+            }
+
+        }
+    }
+</script>

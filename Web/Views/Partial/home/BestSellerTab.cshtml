@@ -1,0 +1,117 @@
+﻿<div class="bestsell-pro">
+    <div>
+        <div class="slider-items-products">
+            <div class="bestsell-block">
+                <div class="block-title">
+                    <h2>Best Sellers</h2>
+                </div>
+                <div id="bestsell-slider" class="product-flexslider hidden-buttons">
+                    <div class="slider-items slider-width-col4 products-grid block-content">
+                        @if (ViewBag.BestSellerProduct != null && ViewBag.BestSellerProduct.Count > 0)
+                        {
+                            for (int item = 0; item < ViewBag.BestSellerProduct.Count; item++)
+                            {
+                                <div class="item">
+                                    <div class="item-inner">
+                                        <div class="item-img">
+                                            <div class="item-img-info">
+                                                <a href="~/product/details/@ViewBag.BestSellerProduct[item].ProductId" title="@ViewBag.BestSellerProduct[item].Name" class="product-image"><img src="@Url.Content("~/" + ViewBag.BestSellerProduct[item].ImageURL)" alt="@ViewBag.BestSellerProduct[item].Name"></a>
+                                                @*<div class="new-label new-top-left">New</div>*@
+                                                <div class="box-hover">
+                                                    <ul class="add-to-links">
+                                                        <li><a class="link-quickview" href="~/product/details/@ViewBag.BestSellerProduct[item].ProductId"></a></li>
+                                                        <li><a class="link-wishlist" href="wishlist.html"></a></li>
+                                                        <li><a class="link-compare" href="compare.html"></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-info">
+                                            <div class="info-inner">
+                                                <div class="item-title"> <a title="Retis lapen casen" href="~/product/details/@ViewBag.BestSellerProduct[item].ProductId"> @ViewBag.BestSellerProduct[item].Name </a> </div>
+                                                <div class="item-content">
+                                                    <div class="rating">
+                                                        <div class="ratings">
+                                                            @if (ViewBag.BestSellerProduct[item].Rating >= 2 && ViewBag.BestSellerProduct[item].Rating <= 2.7M)
+                                                            {
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            }
+                                                            else if (ViewBag.BestSellerProduct[item].Rating > 2.7M && ViewBag.BestSellerProduct[item].Rating <= 3.2M)
+                                                            {
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            }
+                                                            else if (ViewBag.BestSellerProduct[item].Rating > 3.2M && ViewBag.BestSellerProduct[item].Rating <= 3.7M)
+                                                            {
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            }
+                                                            else if (ViewBag.BestSellerProduct[item].Rating > 3.7M && ViewBag.BestSellerProduct[item].Rating <= 4.2M)
+                                                            {
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            }
+                                                            else if (ViewBag.BestSellerProduct[item].Rating > 4.2M && ViewBag.BestSellerProduct[item].Rating <= 4.7M)
+                                                            {
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                            }
+                                                            else if (ViewBag.BestSellerProduct[item].Rating > 4.7M && ViewBag.BestSellerProduct[item].Rating <= 6)
+                                                            {
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                            }
+                                                            <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-price">
+                                                        <div class="price-box">
+                                                            @if (ViewBag.BestSellerProduct[item].OldPrice != null)
+                                                            {
+                                                                <p class="old-price"><span class="price-label">Regular Price:</span> <span class="price">$@ViewBag.BestSellerProduct[item].OldPrice </span> </p>
+                                                                <p class="special-price"><span class="price-label">Special Price</span> <span class="price">$@ViewBag.BestSellerProduct[item].Price </span> </p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="regular-price"><span class="price">$@ViewBag.BestSellerProduct[item].Price</span> </span>
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="action">
+                                                        <button class="button btn-cart" type="button" title="Add to Cart" pid="@ViewBag.BestSellerProduct[item].ProductId" data-original-title="Add to Cart"><span>Add to Cart</span></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

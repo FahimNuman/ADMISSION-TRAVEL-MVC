@@ -1,0 +1,50 @@
+﻿@using Web.AppCode;
+<div class="footer-middle">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="footer-column pull-left">
+                    <h4>Quick Links</h4>
+                    <ul class="links">
+                        <li><a href="@Url.Action("Index", "home")" title="Home">Home</a></li>
+                        <li><a href="@Url.Action("Index", "blog")" title="Our News">News</a></li>
+                        <li><a href="@Url.Action("question-answer", "agency")" title="FAQs">FAQs</a></li>
+                        <li><a href="@Url.Action("privacy-policy", "agency")" title="Privacy Policy">Privacy Policy</a></li>
+                        <li><a href="@Url.Action("terms-conditions", "agency")" title="Terms & Conditions">Terms & Conditions</a></li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="footer-column pull-left">
+                    <h4>Importents</h4>
+                    <ul class="links">
+                        <li><a title="Student Service" href="@Url.Action("student-service", "agency")">Buy Ticket</a></li>
+                        <li><a title="Our News" href="@Url.Action("Index", "blog")">News</a></li>
+                        <li><a href="@Url.Action("feedback", "agency")">Feedback</a></li>
+                        <li><a href="@Url.Action("our-agents", "agency")">Agents</a></li>
+                        @if (LoggedInUserInfoFromCookie.UserDisplayNameInCookie != null && LoggedInUserInfoFromCookie.UserDisplayNameInCookie != "")
+                        {
+                            <li><a title="Blog" href="@Url.Action("Logout", "account")">Log Out</a> </li>
+
+                        }
+                        else
+                        {
+                            <li><a title="Blog" href="@Url.Action("login", "account")">Agent LogIn</a> </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <h4>contact us</h4>
+                <div class="contacts-info">
+                    <address>
+                        <i class="add-icon">&nbsp;</i>@ViewBag.SiteSetting.ContactLocation
+                    </address>
+                    <div class="phone-footer"><i class="phone-icon">&nbsp;</i> @ViewBag.SiteSetting.ContactMobile</div>
+                    <div class="email-footer"><i class="email-icon">&nbsp;</i> <a href="#">@ViewBag.SiteSetting.ContactEmailAddress</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

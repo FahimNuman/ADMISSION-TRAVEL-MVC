@@ -1,0 +1,150 @@
+﻿@using Web.AppCode;
+@model Services.Domain.Admin.ReviewProcessModel
+
+@using (Html.BeginForm("ProcessProductReview", "SuperAdmin", FormMethod.Post, new { @class = "form-horizontal", @id = "registration", role = "form", autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Review.ProductId, new { @Value = ViewBag.ProductId })
+    
+  
+    
+
+    <h3>Write Your Own Review</h3>
+    <fieldset>
+        <h4>How do you rate this product? <em class="required">*</em></h4>
+        <span id="input-message-box"></span>
+        <table id="product-review-table" class="data-table">
+            <thead>
+                <tr class="first last">
+                    <th>&nbsp;</th>
+                    <th><span class="nobr">1 *</span></th>
+                    <th><span class="nobr">2 *</span></th>
+                    <th><span class="nobr">3 *</span></th>
+                    <th><span class="nobr">4 *</span></th>
+                    <th><span class="nobr">5 *</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="first odd">
+                    <th>Price</th>
+                    <td class="value"><input type="radio" class="radio" value="1" id="Price_1" name="ratingPrice"></td>
+                    <td class="value"><input type="radio" class="radio" value="2" id="Price_2" name="ratingPrice"></td>
+                    <td class="value"><input type="radio" class="radio" value="3" id="Price_3" name="ratingPrice"></td>
+                    <td class="value"><input type="radio" class="radio" value="4" id="Price_4" name="ratingPrice"></td>
+                    <td class="value last"><input type="radio" class="radio" value="5" id="Price_5" name="ratingPrice"></td>
+                    @Html.HiddenFor(m => m.Review.Price, new { @id = "Dummy_Price_Rating", @class = "required-entry", @error_msg = "Enter your price rating" })
+                </tr>
+                <tr class="even">
+                    <th>Value</th>
+                    <td class="value"><input type="radio" class="radio" value="1" id="Value_1" name="ratingValue"></td>
+                    <td class="value"><input type="radio" class="radio" value="2" id="Value_2" name="ratingValue"></td>
+                    <td class="value"><input type="radio" class="radio" value="3" id="Value_3" name="ratingValue"></td>
+                    <td class="value"><input type="radio" class="radio" value="4" id="Value_4" name="ratingValue"></td>
+                    <td class="value last"><input type="radio" class="radio" value="5" id="Value_5" name="ratingValue"></td>
+                    @Html.HiddenFor(m => m.Review.Value, new { @id = "Dummy_Valuee_Rating", @class = "required-entry", @error_msg = "Enter your value rating" })
+                </tr>
+                <tr class="last odd">
+                    <th>Quality</th>
+                    <td class="value"><input type="radio" class="radio" value="1" id="Quality_1" name="ratingQualtiy"></td>
+                    <td class="value"><input type="radio" class="radio" value="2" id="Quality_2" name="ratingQualtiy"></td>
+                    <td class="value"><input type="radio" class="radio" value="3" id="Quality_3" name="ratingQualtiy"></td>
+                    <td class="value"><input type="radio" class="radio" value="4" id="Quality_4" name="ratingQualtiy"></td>
+                    <td class="value last"><input type="radio" class="radio" value="5" id="Quality_5" name="ratingQualtiy"></td>
+                    @Html.HiddenFor(m => m.Review.Quality, new { @id = "Dummy_Quality_Rating", @class = "required-entry", @error_msg = "Enter your quality rating" })
+                </tr>
+            </tbody>
+        </table>
+        <input type="hidden" value="" class="validate-rating" name="validate_rating">
+        <div class="review1">
+            <ul class="form-list">
+                @if (LoggedInUserInfoFromCookie.UserDisplayNameInCookie == null || LoggedInUserInfoFromCookie.UserDisplayNameInCookie == "")
+                {
+                    <li>
+                        <label class="required" for="nickname_field">Name<em>*</em></label>
+                        <div class="input-box">
+                            @Html.TextBoxFor(m => m.Review.CustomerName, new
+                   {
+                       @class = "input-text required-entry",
+                       title = "Name",
+                       @error_msg = "Enter your name"
+
+                   })
+                        </div>
+                    </li>
+                    <li>
+                        <label class="required" for="summary_field">Email<em>*</em></label>
+                        <div class="input-box">
+                            @Html.TextBoxFor(m => m.Review.CustomerEmail, new
+                   {
+                       @class = "input-text required-entry",
+                       title = "Email",
+                       @error_msg = "Enter your email"
+
+                   })
+                        </div>
+                    </li>
+                }
+                <li>
+                    <label class="required" for="summary_field">Summery<em>*</em></label>
+                    <div class="input-box">
+                        @Html.TextBoxFor(m => m.Review.Summery, new
+                   {
+                       @class = "input-text required-entry",
+                       title = "Email",
+                       @error_msg = "Enter your summery"
+
+                   })
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="review2">
+            <ul>
+                <li>
+                    <label class="required " for="review_field">Review<em>*</em></label>
+                    <div class="input-box">
+                        @Html.TextAreaFor(m => m.Review.Description, new
+                   {
+                       @class = "input-text required-entry",
+                       title = "Email",
+                       @rows = "3",
+                       @cols = "5",
+                       @error_msg = "Enter your review details"
+
+                   })
+                    </div>
+                </li>
+            </ul>
+            <div class="buttons-set">
+                <button class="button submit" title="Submit Review" type="submit" onclick="return ReviewFormValidation();"><span>Submit Review</span></button>
+            </div>
+        </div>
+    </fieldset>
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("input[name='ratingPrice']").click(function () {
+            var priceRating = $("input[name='ratingPrice']:checked").val();
+            $("#Dummy_Price_Rating").val(priceRating);
+        });
+
+        $("input[name='ratingValue']").click(function () {
+            var ratingValue = $("input[name='ratingValue']:checked").val();
+            $("#Dummy_Valuee_Rating").val(ratingValue);
+        });
+
+        $("input[name='ratingQualtiy']").click(function () {
+            var ratingValue = $("input[name='ratingQualtiy']:checked").val();
+            $("#Dummy_Quality_Rating").val(ratingValue);
+        });
+    });
+
+    function ReviewFormValidation() {
+        var isFormValid = $(".required-entry").MyFormValidation();
+        
+        return isFormValid;
+    }
+
+</script>

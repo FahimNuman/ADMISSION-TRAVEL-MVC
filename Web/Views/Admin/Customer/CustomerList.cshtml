@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Agents";
+    Layout = "~/Views/Shared/Admin/_SuperAdminLayout.cshtml";
+}
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card">
+        <ol class="breadcrumb breadcrumb-bg-pink">
+            <li><a href="@Url.Action("dashboard", "admin")"><i class="material-icons">dashboard</i> Dashboard</a></li>
+            <li class="active"><i class="material-icons">people</i> Agents</li>
+        </ol>
+    </div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card">
+        <div class="header">
+            <h2>Agents</h2>
+            <ul class="header-dropdown m-r--5">
+                <li class="dropdown">
+                    <a class="btn bg-deep-purple waves-effect hover-expand-effect" title="Add Product" href="~/admin/new-agent?mode=agent">
+                        <i class="material-icons">plus_one</i>
+                        <span>New</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="body">
+            <div class="table-responsive">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Roles</th>
+                                <th>Phone</th>
+                                <th>Active</th>
+                                <th>Created On</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Roles</th>
+                                <th>Phone</th>
+                                <th>Active</th>
+                                <th>Created On</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @for (var itemCount = 0; itemCount < ViewBag.CustomerList.Count; itemCount++)
+                            {
+
+                                <tr>
+                                    <td>@ViewBag.CustomerList[itemCount].UserFullName</td>
+                                    <td>@ViewBag.CustomerList[itemCount].EmailAddress</td>
+                                    <td>@ViewBag.CustomerList[itemCount].UserRole</td>
+                                    <td>@ViewBag.CustomerList[itemCount].PhoneNumber</td>
+                                    @if (ViewBag.CustomerList[itemCount].IsActivated == true)
+                                    {
+                                        <td><span class="fa fa-check true-icon"></span></td>
+                                    }
+                                    else
+                                    {
+                                        <td><span class="fa fa-times false-icon"></span></td>
+                                    }
+
+                                    <td>@ViewBag.CustomerList[itemCount].CreatedDate.ToString("MM/dd/yyyy h:mm tt")</td>
+                                    <td>
+                                        <a href="~/admin/EditCustomer/@ViewBag.CustomerList[itemCount].UserID?mode=agent" class="btn bg-purple waves-effect hover-expand-effect" title="Edit"><i class="material-icons">mode_edit</i></a>
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(".dummy_customer_link ").addClass("active");
+        $(".dummy_customer_link  a.toggled_dummy_customer_link ").click();
+    })
+
+</script>

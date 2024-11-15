@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Make Yourself Comfortable";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12 home-slider">
+            @Html.Action("_LoadMainSlider", "home")
+        </div>
+    </div>
+</div>
+
+
+
+<section class="main-container col2-left-layout">
+    <div class="container">
+        <div class="row">
+            @if (ViewBag.OurServiceProviders != null && ViewBag.OurServiceProviders.Count > 0)
+            {
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <h3 class="section-header">
+                        <span class="icon-box">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                        </span>
+                        &nbsp;Call for bus tickets and home delivery service
+                    </h3>
+                    @for (int i = 0; i < ViewBag.OurServiceProviders.Count; i++)
+                    {
+                        <div class="advantage-box">
+                            <div class="icon-box small-box">
+                                <i class="fa fa-mobile" aria-hidden="true"></i>
+                            </div>
+                            <div class="advantage-text">
+                                @ViewBag.OurServiceProviders[i].VisibleText
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            }
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <h3 class="section-header"><span class="icon-box"><i class="fa fa-bus" aria-hidden="true"></i></span> &nbsp; Admission Travel Advantage</h3>
+
+                @if (ViewBag.AdvantageList != null && ViewBag.AdvantageList.Count > 0)
+                {
+
+                    for (int i = 0; i < ViewBag.AdvantageList.Count; i++)
+                    {
+                        <div class="advantage-box">
+                            <div class="icon-box small-box">
+                                <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                            </div>
+                            <div class="advantage-text">
+                                @ViewBag.AdvantageList[i].Name
+                            </div>
+                        </div>
+                    }
+
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+
+@Html.Action("_LoadHomePageBlog", "home")
+<!-- End Latest Blog -->
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(".listed-child:first-child").addClass("active");
+
+    });
+
+</script>

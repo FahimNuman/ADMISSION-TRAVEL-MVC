@@ -1,0 +1,67 @@
+﻿@using Services.Domain.Models.User.EditorModel
+@model LoginModel
+@{
+    ViewBag.Title = "login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-container col1-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-xs-12">
+                <article class="col-main">
+                    <div class="account-login">
+                        <div class="page-title">
+                            <h2>Login your Account</h2>
+                        </div>
+                        <fieldset class="col-md-6 no-padding">
+                            <div class="col-12 registered-users">
+                                <div class="content">
+                                    @using (Html.BeginForm("Processlogin", "account", FormMethod.Post, new { @class = "form-horizontal", role = "form", autocomplete = "off" }))
+                                    {
+                                        <p>If you have an account with us, please log in.</p>
+                                        <ul class="form-list">
+                                            <li>
+                                                <label for="email" style="display: block; width: 100%; text-align: left;padding-left: 0;">Email Address <span class="required">*</span></label>
+                                                @Html.TextBoxFor(m => m.EmailAddress, new { @class = "input-text required-entry", title = "Email Address", @value = "", @data_validation = "email", @expression_msg = "Email must be this form test@gmail.com", @error_msg = "Enter your registered email", })
+                                            </li>
+                                            <li>
+                                                <label for="pass" style="display: block; width: 100%; text-align: left;padding-left: 0;">Password <span class="required">*</span></label>
+                                                @Html.PasswordFor(m => m.Password, new { @class = "input-text required-entry validate-password", title = "Password", @type = "password", @value = "", @error_msg = "Enter your password", })
+                                            </li>
+                                        </ul>
+                                        <p class="required">* Required Fields</p>
+                                        <div class="buttons-set">
+                                            <button id="send2" name="send" type="submit" class="button login" onclick="return DoLoginFormValidation();"><span>Login</span></button>
+                                            <a class="forgot-word" href="@Url.Action("forgot-password", "account")">Forgot Your Password?</a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </article>
+                <!--	///*///======    End article  ========= //*/// -->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        if ('@ViewBag.serverMessage' != null && '@ViewBag.serverMessage' != '') {
+            ShowAjaxNotificationMessage("Oops!", '@ViewBag.serverMessage', "warning");
+        }
+    })
+
+
+    function DoLoginFormValidation() {
+        var isFormValid = $(".required-entry").MyFormValidation();
+
+        return isFormValid;
+    }
+
+</script>

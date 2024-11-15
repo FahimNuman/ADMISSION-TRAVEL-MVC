@@ -1,0 +1,494 @@
+﻿@using Services.Domain.SuperAdmin
+@model CustomerOperationDataModel
+@{
+    ViewBag.Title = "New Aagent or Admin";
+    Layout = "~/Views/Shared/Admin/_SuperAdminLayout.cshtml";
+}
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card">
+        <ol class="breadcrumb breadcrumb-bg-pink">
+            <li><a href="@Url.Action("dashboard", "admin")"><i class="material-icons">dashboard</i> Dashboard</a></li>
+            <li><a href="@Url.Action("agentlist", "admin")"><i class="material-icons">people</i> Agents</a></li>
+            <li class="active">New Agent or Admin</li>
+        </ol>
+    </div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    @using (Html.BeginForm("ProcessNewCustomer", "SuperAdmin", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", @autocomplete = "off" }))
+    {
+
+        @Html.AntiForgeryToken()
+        <div class="card">
+            <div class="header">
+                <h2><i class="material-icons">done_all</i> Fill up this form carefully</h2>
+                <ul class="header-dropdown m-r--5">
+                    <li>
+                        <a class="btn bg-deep-purple waves-effect hover-expand-effect" href="@Url.Action("agentlist", "admin")">
+>
+                            <i class="material-icons">settings_backup_restore</i>
+                            <span>Back</span>
+                        </a>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-success waves-effect hover-expand-effect" onclick="DoNewCustomerValidation();">
+                            <i class="material-icons">done</i>
+                            <span>Save</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                <div class="clearfix">
+
+                    <ul class="nav nav-tabs">
+                        <li class="active dummy_tab_pane_active"><a data-toggle="tab" href="#CustomerInfo">Info</a></li>
+                       
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#AddressInfo">Address</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#pPhoto">Photo</a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div id="CustomerInfo" class="tab-pane fade in active mt-5">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label for="Name">Email<em class="required">*</em></label>
+                                    <div class="form-line">
+                                        @Html.TextBoxFor(m => m.User.EmailAddress, new
+                                   {
+                                       @class = "form-control required-entry",
+                                       @id = "EmailAddress",
+                                       @required = "required",
+                                       @data_validation = "email",
+                                       @error_msg = "Email name is required",
+                                       @expression_msg = "Email must be this form test@gmail.com"
+                                   })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label for="Name">Pasword<em class="required">*</em></label>
+                                    <div class="form-line">
+                                        @Html.TextBoxFor(m => m.User.Password, new
+                                   {
+                                       @class = "form-control required-entry",
+                                       @id = "Password",
+                                       @type = "password",
+                                       @required = "required",
+                                       @data_validation = "password",
+                                       @error_msg = "Enter your password"
+                                   })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label for="Name">Pasword<em class="required">*</em></label>
+                                    <div class="form-line">
+                                        @Html.TextBoxFor(m => m.User.ConfirmPassword, new
+                                   {
+                                       @class = "form-control required-entry",
+                                       @id = "ConfirmPassword",
+                                       @type = "password",
+                                       @required = "required",
+                                       @data_validation = "confirmation",
+                                       @error_msg = "Enter confirm password",
+                                       @expression_msg = "Your confirm password doesn't match",
+                                       @confirmation_id = "Password"
+                                   })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-sm-12">
+                                <div class="form-group">
+                                    <label for="Name">Roles</label>
+                                    <div class="form-line">
+                                        @(Html.Kendo().MultiSelect()
+                                .Name("mltAdminUserRoles")
+                                .DataTextField("Role")
+                                .DataValueField("Id")
+                                .HtmlAttributes(new { style = "width: 100%;", id = "mltAdminUserRoles" })
+                                .DataSource(source =>
+                                {
+                                    source.Read(read =>
+                                    {
+                                        read.Action("GetAllAdminRoles", "Common");
+                                    });
+                                })
+                                .Events(e =>
+                                {
+                                    e.Change("OnChangeCustomerRoles");
+                                })
+                                        )
+                                        @Html.HiddenFor(m => m.UserRoleIdWithComma, new
+                                   {
+                                       id = "dummy_AdminUserRoles",
+                                       @class = "form-control required-entry",
+                                       @error_msg = "Enter atleast one user roles"
+                                   })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label for="Name">First name</label>
+                                    <div class="form-line">
+                                        @Html.TextBoxFor(m => m.User.FirstName, new
+                                   {
+                                       @class = "form-control required-entry",
+                                       @id = "FirstName",
+                                       @required = "required",
+                                       title = "First Name",
+                                       @error_msg = "First name is required"
+                                   })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label for="Name">Last name</label>
+                                    <div class="form-line">
+                                        @Html.TextBoxFor(m => m.User.LastName, new
+                                   {
+                                       @class = "form-control required-entry",
+                                       @id = "LastName",
+                                       @required = "required",
+                                       @error_msg = "Last name is required"
+                                   })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label for="Name">Phone</label>
+                                    <div class="form-line">
+                                        @Html.TextBoxFor(m => m.User.PhoneNumber, new
+                                   {
+                                       @class = "form-control required-entry",
+                                       @id = "PhoneNumber",
+                                       @required = "required",
+                                       @data_validation = "phone",
+                                       @error_msg = "Phone number is required"
+                                   })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label for="Name">Active</label>
+                                    <div class="form-break">
+                                        @Html.CheckBoxFor(m => m.User.IsActivated, new { @class = "switch", @Checked = "checked" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane container fade mt-5" id="AddressInfo">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label for="Name">Address one<em class="required">*</em></label>
+                                    <div class="form-line">
+                                        @Html.TextBoxFor(m => m.User.AddressOne, new
+                                   {
+                                       @class = "form-control required-entry",
+                                       @id = "AddressOne",
+                                       @required = "required",
+                                       @error_msg = "Address is required"
+                                   })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label for="Name">Address two<em class="required">*</em></label>
+                                    <div class="form-line">
+                                        @Html.TextBoxFor(m => m.User.AddressTwo, new
+                                   {
+                                       @class = "form-control required-entry",
+                                       @id = "AddressTwo",
+                                       @required = "required",
+                                       @error_msg = "Address is required"
+                                   })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label for="Name">City<em class="required">*</em></label>
+                                    <div class="form-line">
+                                        @Html.TextBoxFor(m => m.User.City, new
+                                   {
+                                       @class = "form-control required-entry",
+                                       @id = "City",
+                                       @required = "required",
+                                       @error_msg = "City is required"
+                                   })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label for="Name">PostCode<em class="required">*</em></label>
+                                    <div class="form-line">
+                                        @Html.TextBoxFor(m => m.User.PostCode, new
+                                   {
+                                       @class = "form-control required-entry",
+                                       @id = "PostCode",
+                                       @required = "required",
+                                       @error_msg = "Post code is required"
+                                   })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label for="Name">Country<em class="required">*</em></label>
+                                    <div class="form-line">
+                                        @(Html.Kendo().ComboBoxFor(m => m.User.Country)
+                                            .DataTextField("Name")
+                                            .DataValueField("Name")
+                                            .HtmlAttributes(new
+                                            {
+                                                @class = "required-entry",
+                                                style = "width: 95%;",
+                                                @data_validation = "combo",
+                                                id = "cmbCountryListShipCountry",
+                                                @Value = "Bangladesh",
+                                                @error_msg = "Country name is required",
+                                                @expression_msg = "Country not exist in world"
+                                            })
+                                            .DataSource(source =>
+                                            {
+                                                source.Read(read =>
+                                                {
+                                                    read.Action("GetAllCountryList", "Common");
+                                                });
+                                            }))
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane container fade mt-5" id="pPhoto">
+
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        @(Html.Kendo().Upload()
+                                            .Name("uPhotoUploder")
+                                            .Async(a => a
+                                                .Save("UploadUserImage", "Common")
+                                                .AutoUpload(true)
+                                            )
+                                            .Multiple(false)
+                                            .DropZone("dropZoneElement")
+                                            .Events(events => events
+                                            .Select("onSelect")
+                                            .Success("onSuccess")
+                                            .Error("OErrorHandle")
+                                            )
+                                            .Messages(mess => mess.Select("User Photo"))
+                                            .HtmlAttributes(new { id = "customerPhoto" })
+                                            .Validation(validation =>
+                                            {
+                                                validation.AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" });
+                                                validation.MaxFileSize(512000);//500KB max
+                                            })
+                                        )
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <div class="form-break">
+
+                                        <div class="dummy_UserImageContainerDiv wow fadeInUp animated">
+                                            <img src="@Url.Content("~/dashboard-assets/images/user.png")" id="divDefaultUploadedUserImg" class="img-responsive" alt="User Logo">
+                                        </div>
+                                        @Html.HiddenFor(m => m.User.UserImagePath, new { id = "dummy_productImagePath", @error_msg = "Upload your image", @class = "required-entry" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-sm-12 col-xs-12 mt-5">
+                        <div class="pull-right">
+                            <a class="btn bg-deep-purple waves-effect hover-expand-effect" href="@Url.Action("agentlist", "admin")">
+>
+                                <i class="material-icons">settings_backup_restore</i>
+                                <span>Back</span>
+                            </a>
+                            <button type="button" class="btn btn-success waves-effect hover-expand-effect" onclick="DoNewCustomerValidation();">
+                                <i class="material-icons">done</i>
+                                <span>Save</span>
+                            </button>
+                            <button type="submit" style="display: none;" id="btnSaveData">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+</div>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".switch").bootstrapSwitch();
+        $(".dummy_customer_link ").addClass("active");
+        $(".dummy_customer_link  a.toggled_dummy_customer_link ").click();
+
+        $("#EmailAddress").keyup(function () {
+            CheckEmailAddressExist();
+        });
+    });
+
+
+    function CheckEmailAddressExist() {
+        $(".validation-message").remove();
+        var email = $.trim($("#EmailAddress").val());
+        $.get("/account/CheckUserEmailIsExist/", { email: email }, function (data) {
+            if (data) {
+                $("#EmailAddress").after("<span class='validation-message error-msg'>Email already exists in current system</span>");
+            }
+        });
+
+    }
+
+
+    function DoNewCustomerValidation() {
+        var email = $.trim($("#EmailAddress").val());
+
+        if (email != "") {
+            $.get("/account/CheckUserEmailIsExist/", { email: email }, function (data) {
+
+                if (data) {
+                    $(".required-entry").MyFormValidation();
+                    $("#EmailAddress").after("<span class='validation-message error-msg'>Email already exists in current system</span>");
+                } else {
+                    var isFormValid = $(".required-entry").MyFormValidation();
+                    if (isFormValid) {
+                        $("#btnSaveData").click();
+                    }
+                }
+            });
+        } else {
+            var isFormValid = $(".required-entry").MyFormValidation();
+            if (isFormValid) {
+                $("#btnSaveData").click();
+            }
+        }
+
+    }
+
+    function OnChangeCustomerRoles() {
+        var value = this.value();
+        $("#dummy_AdminUserRoles").val(value);
+    }
+
+    function addPreview(file) {
+        var raw = file.rawFile;
+        var reader = new FileReader();
+
+        if (raw) {
+            reader.onloadend = function () {
+                var preview = $("<img class='image-preview img-responsive dummy_divUplodedUserImg' id=''>").attr("src", this.result);
+                $(".dummy_UserImageContainerDiv").html(preview);
+                $('#divDefaultUploadedUserImg').hide();
+            };
+            reader.readAsDataURL(raw);
+        }
+    }
+
+
+    function onSelect(e) {
+
+        $("#divForProfileImageValidation").hide();
+        var files = e.files;
+
+        var fullImageName = e.files["0"].name;
+        var imageExtension = e.files["0"].extension;
+        var exactImageName = fullImageName.replace(imageExtension, "");
+        var fileInfo = e.files[0];
+        setTimeout(function () {
+            addPreview(fileInfo);
+        });
+
+        $.each(files, function () {
+            if (this.size > 512000 && exactImageName.length > 90) {
+
+                //image & name validation
+                alert("Maximum 500KB in size and 90 characters name are allowed for company logo.");
+
+                e.preventDefault();
+            }
+
+            if (this.size > 512000 && exactImageName.length <= 90) {
+
+                //image validation
+                alert("Maximum 500KB image allowed for company logo.");
+
+                e.preventDefault();
+            }
+
+            if (this.size <= 512000 && exactImageName.length > 90) {
+
+                //name validation
+                alert("Maximum 90 characters name allowed for company logo.");
+
+                e.preventDefault();
+            }
+        });
+    }
+
+    function OErrorHandle(e) {
+        try {
+            if (e.XMLHttpRequest.status == 200) {
+                $(".k-upload-files.k-reset").remove();
+            }
+
+            if (e.XMLHttpRequest.response) {
+                $("#dummy_productImagePath").val(e.XMLHttpRequest.response);
+
+            }
+
+        } catch (err) {
+
+        }
+    }
+
+    function onSuccess(e) {
+        try {
+            $("#dummy_productImagePath").val(e.response.Data);
+
+        }
+        catch (err) {
+
+        }
+    }
+
+</script>
